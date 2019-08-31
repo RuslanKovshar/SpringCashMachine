@@ -25,6 +25,11 @@
             <input type="password" id="password" name="password" class="form-control" placeholder="Password"
                    required>
         </p>
+
+        <label>Remember Me:
+            <input type="checkbox" name="remember-me" value="true"/>
+        </label>
+
         <button class="btn btn-lg btn-dark btn-block" type="submit"><@spring.message "login.message"/></button>
     </form>
     <form class="form-signin mt-3" action="/registration">
