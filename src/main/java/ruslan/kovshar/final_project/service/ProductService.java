@@ -30,4 +30,8 @@ public class ProductService {
     public Product loadByCode(Integer code) {
         return productRepository.findByCode(code).orElseThrow(ProductNotFoundException::new);
     }
+
+    public Product loadById(Long id) {
+        return productRepository.findById(id).get();
+    }
 }

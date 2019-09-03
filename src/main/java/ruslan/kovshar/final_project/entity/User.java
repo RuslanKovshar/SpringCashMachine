@@ -7,6 +7,7 @@ import ruslan.kovshar.final_project.enums.Roles;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -21,22 +22,27 @@ public class User implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id",nullable = false)
+    @Column(name = "id", nullable = false)
     private Long id;
 
-    @Column(name = "email",nullable = false)
+    @Column(name = "email", nullable = false)
     private String email;
 
-    @Column(name = "password",nullable = false)
+    @Column(name = "password", nullable = false)
     private String password;
 
     private String firstName;
     private String secondName;
 
     @ElementCollection(targetClass = Roles.class, fetch = FetchType.EAGER)
-    @CollectionTable(name = "user_roles",joinColumns = @JoinColumn(name = "user_id"))
+    @CollectionTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"))
     @Enumerated(EnumType.STRING)
     private Set<Roles> authorities;
+
+    @OneToMany(cascade = CascadeType.ALL,
+            fetch = FetchType.EAGER,
+            mappedBy = "user")
+    private Set<Check> checks;
 
     private boolean isAccountNonExpired;
     private boolean isAccountNonLocked;
@@ -76,5 +82,13 @@ public class User implements UserDetails {
     @Override
     public boolean isEnabled() {
         return isEnabled;
+    }
+
+    public boolean isMerchandiser() {
+        return authorities.contains(Roles.MERCHANDISER);
+    }
+
+    public boolean isSeniorCashier() {
+        return authorities.contains(Roles.SENIOR_CASHIER);
     }
 }

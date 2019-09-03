@@ -10,8 +10,6 @@ public class CountProduct extends Product {
 
     @Override
     public BigDecimal calculatePrice(Number value) {
-        System.out.println("Count");
-        System.err.println(value);
         return price.multiply(new BigDecimal(value.intValue()));
     }
 

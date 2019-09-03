@@ -26,9 +26,10 @@
                    required>
         </p>
 
-        <label>Remember Me:
-            <input type="checkbox" name="remember-me" value="true"/>
-        </label>
+
+        <label for="remember-me"><@spring.message "remember.me.message"/></label>
+        <input id="remember-me" type="checkbox" name="remember-me" value="true"/>
+
 
         <button class="btn btn-lg btn-dark btn-block" type="submit"><@spring.message "login.message"/></button>
     </form>

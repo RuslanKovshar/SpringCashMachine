@@ -20,8 +20,11 @@ public class Stock {
     @Column(name = "row_id")
     private Long id;
 
-    @Column(name = "product_id")
-    private Long productId;
+/*    @Column(name = "product_id")
+    private Long productId;*/
+
+    @OneToOne
+    private Product product;
 
     @Column(name = "count_of_product")
     private Integer countOfProduct;

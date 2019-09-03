@@ -2,12 +2,12 @@
 <#import "/spring.ftl" as spring/>
 <@c.common>
 
-    <button class="btn btn-primary" type="button"
+    <button class="btn btn-primary btn-block" type="button"
             data-toggle="collapse"
             data-target="#collapseExample"
             aria-expanded="false"
             aria-controls="collapseExample">
-        Add product
+        <@spring.message "create.new.product.message"/>
     </button>
     <br>
 
@@ -15,54 +15,51 @@
         <form action="/merchandiser" method="post" class="form-group">
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
 
-            <label>Name
-                <input type="text" name="name" class="form-control">
-            </label>
+            <label for="inputName"><@spring.message "name.message"/></label>
+            <input id="inputName" type="text" name="name" class="form-control">
 
+            <label for="inputCode"><@spring.message "code.message"/></label>
+            <input id="inputCode" type="text" name="code" class="form-control">
 
-            <label>Code
-                <input type="text" name="code" class="form-control">
-            </label>
+            <label for="inputPrice"><@spring.message "product.price.message"/></label>
+            <input id="inputPrice" type="text" name="price" class="form-control">
 
-            <label>Price
-                <input type="text" name="price" class="form-control">
-            </label>
+            <label for="inputCount"><@spring.message "count.on.stock.message"/></label>
+            <input id="inputCount" type="text" name="count" class="form-control">
 
-            <label>Count
-                <input type="text" name="count" class="form-control">
-            </label>
+            <label for="inputType"><@spring.message "type.message"/></label>
+            <select id="inputType" name="type" class="form-control">
+                <option value="PIECE_PRODUCT"><@spring.message "count.product.message"/></option>
+                <option value="PRODUCT_BY_WEIGHT"><@spring.message "weight.product.message"/></option>
+            </select>
 
-            <label>Type
-                <select name="type" class="form-control">
-                    <option value="PIECE_PRODUCT">PIECE_PRODUCT</option>
-                    <option value="PRODUCT_BY_WEIGHT">PRODUCT_BY_WEIGHT</option>
-                </select>
-            </label>
-
-            <button type="submit" class="btn btn-lg btn-danger">Create product</button>
+            <button type="submit" class="btn btn-danger btn-block mt-2"><@spring.message "create.btn.message"/></button>
         </form>
     </div>
 
-    <button class="btn btn-primary" type="button"
+    <button class="btn btn-primary btn-block" type="button"
             data-toggle="collapse"
             data-target="#collapseExample1"
             aria-expanded="false"
             aria-controls="collapseExample">
-        Count of products
+        <@spring.message "add.products.to.stock.message"/>
     </button>
-    <div class="collapse <#if notFound!false>show</#if>" id="collapseExample1">
+    <div class="collapse <#if notFound??>show</#if>" id="collapseExample1">
         <form action="/merchandiser/stock" method="post" class="form-group">
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
-            <label>Name
-                <input type="text" name="name" class="form-control <#if notFound!false>is-invalid</#if>">
-                <#if notFound!false>
-                    <div class="invalid-feedback">Not Found</div>
-                </#if>
-            </label>
-            <label>Count of product
-                <input type="text" name="countOfProduct" class="form-control">
-            </label>
-            <button type="submit" class="btn btn-lg btn-danger">Create product</button>
+
+
+            <label for="inputName1"><@spring.message "name.message"/></label>
+            <input id="inputName1" type="text" name="name" class="form-control <#if notFound??>is-invalid</#if>">
+
+            <#if notFound??>
+                    <div class="invalid-feedback"><@spring.message "product.not.found.message"/></div>
+            </#if>
+
+            <label for="inputCount1"><@spring.message "product.count.message"/></label>
+            <input id="inputCount1" type="text" name="countOfProduct" class="form-control">
+
+            <button type="submit" class="btn btn-lg btn-danger btn-block mt-2"><@spring.message "create.btn.message"/></button>
         </form>
     </div>
 </@c.common>

@@ -1,28 +1,36 @@
 package ruslan.kovshar.final_project.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.persistence.*;
 import java.math.BigDecimal;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 @Setter
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
+@Entity
+@Table(name = "checks")
 public class Check {
 
-    private Map<Product, BigDecimal> products = new HashMap<>();
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
 
-    public void addProduct(Product product, Number value) {
-        System.out.println(product.getClass().getName());
-        products.putIfAbsent(product,product.calculatePrice(value));
-    }
+    @OneToMany(cascade = CascadeType.ALL,
+            fetch = FetchType.EAGER)
+    private List<ProductInCheck> products = new ArrayList<>();
 
-    public boolean isEmpty() {
-        return products.isEmpty();
-    }
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
+
+    @Column(name = "total_price")
+    private BigDecimal totalPrice = BigDecimal.ZERO;
 }

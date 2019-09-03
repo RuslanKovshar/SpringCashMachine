@@ -2,41 +2,46 @@
 <#import "/spring.ftl" as spring/>
 <@c.common>
 
-
-    <#if product??>
-        <form action="/product/add/${product.id}" method="post">
-            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
-            <div><p>${product.name}</p></div>
-            <#if product.class.name == 'ruslan.kovshar.final_project.entity.CountProduct'>
-                <label for="inputNumber">Enter count</label>
-            <#else>
-                <label for="inputNumber">Enter weight</label>
-            </#if>
-            <input type="number" id="inputNumber" name="number">
-            <button class="btn btn-lg btn-success">Add product</button>
-        </form>
-    <#else>
-        <form action="/product" method="post">
-            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
-            <label>Name
-                <input type="text" name="name">
-            </label>
-            <button class="btn btn-lg btn-success">Search product</button>
-        </form>
-    </#if>
-
-    <#if !check.empty>
-        <div class="alert alert-success" role="alert">
-            <#list check.products as product, price>
-
-                    <p>Name: ${product.name}</p>
-                    <p>Price:${price} </p>
-
-            </#list>
+    <form action="/product/add/${product.id}" method="post">
+        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
+        <div class="row">
+            <div class="col-4">
+                <h2><em><@spring.message "name.message"/></em></h2>
+            </div>
+            <div class="col-8">
+                <h2>${product.name}</h2>
+            </div>
         </div>
-        <form action=""></form>
-        <button class="btn btn-lg btn-success">Close check</button>
-        <#else >
 
-    </#if>
+        <div class="row">
+            <div class="col-4">
+                <#if product.class.name == 'ruslan.kovshar.final_project.entity.CountProduct'>
+                    <h2><em><@spring.message "price.for.one.product.message"/></em></h2>
+                <#else>
+                    <h2><em><@spring.message "price.for.one.kg.message"/></em></h2>
+                </#if>
+            </div>
+            <div class="col-8">
+                <h2>${product.price}</h2>
+            </div>
+        </div>
+
+        <#if product.class.name == 'ruslan.kovshar.final_project.entity.CountProduct'>
+            <label for="inputNumber"><@spring.message "input.count.message"/></label>
+        <#else>
+            <label for="inputNumber"><@spring.message "input.weight.message"/></label>
+        </#if>
+        <div class="row">
+            <div class="col-8">
+                <input type="number" id="inputNumber" name="number" min="1" class="form-control <#if error>is-invalid</#if>">
+                <#if error>
+                    <div class="invalid-feedback"><@spring.message "not.enough.product.message"/></div>
+                </#if>
+            </div>
+            <div class="col-4">
+                <button class="btn btn-success btn-block"><@spring.message "add.product.message"/></button>
+            </div>
+        </div>
+    </form>
+
 </@c.common>

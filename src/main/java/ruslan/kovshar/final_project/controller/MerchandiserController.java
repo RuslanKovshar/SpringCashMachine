@@ -13,8 +13,11 @@ import ruslan.kovshar.final_project.entity.Stock;
 import ruslan.kovshar.final_project.entity.WeightProduct;
 import ruslan.kovshar.final_project.enums.Types;
 import ruslan.kovshar.final_project.exceptions.ProductNotFoundException;
+import ruslan.kovshar.final_project.exceptions.TransactionException;
 import ruslan.kovshar.final_project.service.ProductService;
 import ruslan.kovshar.final_project.service.StockService;
+
+import javax.transaction.TransactionalException;
 
 @Controller
 @PreAuthorize("hasAuthority('MERCHANDISER')")
@@ -49,10 +52,9 @@ public class MerchandiserController {
         productService.create(product);
 
         Stock stock = new Stock();
-        stock.setProductId(product.getId());
+        stock.setProduct(product);
         stock.setCountOfProduct(count);
         stockService.create(stock);
-
         return "redirect:/merchandiser";
     }
 
@@ -60,9 +62,8 @@ public class MerchandiserController {
     public String addCount(String name, Integer countOfProduct, Model model) {
         try {
             Product product = productService.loadByName(name);
-            stockService.update(product.getId(), countOfProduct);
-        } catch (ProductNotFoundException e) {
-            System.err.println("Not found");
+            stockService.update(product, countOfProduct);
+        } catch (TransactionException e) {
             model.addAttribute("notFound",true);
             return "merchandiser";
         }
