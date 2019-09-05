@@ -33,4 +33,8 @@
                 <button class="btn btn-lg btn-success btn-block mt-2"><@spring.message "merchandiser.menu.message"/></button>
         </form>
     </#if>
+
+    <form action="/senior_cashier_menu">
+        <button class="btn btn-lg btn-success btn-block mt-2"><@spring.message "open.check.message"/></button>
+    </form>
 </@c.common>

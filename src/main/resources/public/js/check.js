@@ -1,17 +1,16 @@
 var app = angular.module("check_form", []);
 
 app.controller("CheckCtrl", function ($scope, $http) {
-    $scope.products = [];
+    $scope.checks = [];
 
-    $http({
-        method: "GET",
-        url: "/get_products",
-        headers: {"Content-Type": "application/json"}
-    }).then(function (data) {
-        $scope.products = data.data.products;
-    });
-
-/*    $scope.getUrl = function (id) {
-        return '/account/users/' + id + '/account_history';
-    };*/
+    $scope.init = function (url) {
+        $http({
+            method: "GET",
+            url: url,
+            headers: {"Content-Type": "application/json"}
+        }).then(function (data) {
+            $scope.checks = data.data.content;
+            console.log(data.data);
+        });
+    };
 });
