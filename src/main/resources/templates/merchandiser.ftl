@@ -44,15 +44,15 @@
             aria-controls="collapseExample">
         <@spring.message "add.products.to.stock.message"/>
     </button>
-    <div class="collapse <#if notFound??>show</#if>" id="collapseExample1">
+    <div class="collapse <#if notFound>show</#if>" id="collapseExample1">
         <form action="/merchandiser/stock" method="post" class="form-group">
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
 
 
             <label for="inputName1"><@spring.message "name.message"/></label>
-            <input id="inputName1" type="text" name="name" class="form-control <#if notFound??>is-invalid</#if>">
+            <input id="inputName1" type="text" name="name" class="form-control <#if notFound>is-invalid</#if>">
 
-            <#if notFound??>
+            <#if notFound>
                     <div class="invalid-feedback"><@spring.message "product.not.found.message"/></div>
             </#if>
 

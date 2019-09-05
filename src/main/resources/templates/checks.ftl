@@ -3,13 +3,15 @@
 <@c.common>
 
     <div ng-app="check_form" ng-controller="CheckCtrl" ng-model="checks"
-         ng-init="init('/senior_cashier_menu/cashier/${id}/checks?page=0')">
+         ng-init="init(${id},0)">
 
         <nav aria-label="Page navigation example">
             <ul class="pagination">
-                <li class="page-item">
-                    <a class="page-link" ng-init="init('/senior_cashier_menu/cashier/${id}/checks?page=1')">1</a>
-                </li>
+                <div ng-repeat="p in [].constructor(page.totalPages) track by $index">
+                    <li class="page-item">
+                        <button class="page-link" ng-click="init(${id},$index)">{{$index + 1}}</button>
+                    </li>
+                </div>
             </ul>
         </nav>
 

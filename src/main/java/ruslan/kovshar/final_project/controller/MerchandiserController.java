@@ -6,6 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import ruslan.kovshar.final_project.dto.ProductDTO;
 import ruslan.kovshar.final_project.entity.CountProduct;
 import ruslan.kovshar.final_project.entity.Product;
@@ -33,7 +34,9 @@ public class MerchandiserController {
     }
 
     @GetMapping
-    public String getMerchandiserPage() {
+    public String getMerchandiserPage(@RequestParam(name = "notFound",required = false) String notFound,
+                                      Model model) {
+        model.addAttribute("notFound",notFound != null);
         return "merchandiser";
     }
 
@@ -60,6 +63,25 @@ public class MerchandiserController {
 
     @PostMapping("/stock")
     public String addCount(String name, Integer countOfProduct, Model model) {
+        Integer code = null;
+        try {
+            code = Integer.parseInt(name);
+        } catch (NumberFormatException ignored) {
+        }
+
+        try {
+            Product product = productService.loadByCodeOrName(code, name);
+            stockService.update(product, countOfProduct);
+            return "redirect:/merchandiser";
+        } catch (ProductNotFoundException e) {
+            return "redirect:/merchandiser?notFound";
+        } catch (TransactionException e) {
+            e.printStackTrace();
+            //TODO: fix this
+            return "redirect:/merchandiser?notFound";
+        }
+
+/*
         try {
             Product product = productService.loadByName(name);
             stockService.update(product, countOfProduct);
@@ -67,6 +89,6 @@ public class MerchandiserController {
             model.addAttribute("notFound",true);
             return "merchandiser";
         }
-        return "redirect:/merchandiser";
+        return "redirect:/merchandiser";*/
     }
 }
