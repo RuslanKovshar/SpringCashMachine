@@ -17,7 +17,7 @@
                    id="InputEmail"
                    placeholder="example@mail.com"
                    name="email"
-                   value="<#if userDTO??>${userDTO.email}</#if>">
+                   value="<#if createUserDTO??>${createUserDTO.email}</#if>">
             <#if emailError??>
                 <div class="invalid-feedback">${emailError}</div>
             </#if>
@@ -35,28 +35,64 @@
             </#if>
         </div>
 
-        <div class="form-group">
-            <label for="InputFirstName"><@spring.message "first.name.message"/></label>
-            <input id="InputFirstName" type="text"
-                   class="form-control ${(firstNameError??)?string('is-invalid','')}"
-                   name="firstName"
-                   placeholder="<@spring.message "placeholder.for.first.name.message"/>"
-                   value="<#if userDTO??>${userDTO.firstName}</#if>">
-            <#if firstNameError??>
-                <div class="invalid-feedback">${firstNameError}</div>
-            </#if>
+        <div class="row">
+            <div class="col">
+                <div class="form-group">
+                    <label for="InputFirstNameUA"><@spring.message "first.name.message"/>UA</label>
+                    <input id="InputFirstNameUA" type="text"
+                           class="form-control ${(firstNameUAError??)?string('is-invalid','')}"
+                           name="firstNameUA"
+                           placeholder="<@spring.message "placeholder.for.first.name.message"/>"
+                           value="<#if createUserDTO??>${createUserDTO.firstNameUA}</#if>">
+                    <#if firstNameUAError??>
+                        <div class="invalid-feedback">${firstNameUAError}</div>
+                    </#if>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="form-group">
+                    <label for="InputFirstNameEN"><@spring.message "first.name.message"/>EN</label>
+                    <input id="InputFirstNameEN" type="text"
+                           class="form-control ${(firstNameENError??)?string('is-invalid','')}"
+                           name="firstNameEN"
+                           placeholder="<@spring.message "placeholder.for.first.name.message"/>"
+                           value="<#if createUserDTO??>${createUserDTO.firstNameEN}</#if>">
+                    <#if firstNameENError??>
+                        <div class="invalid-feedback">${firstNameENError}</div>
+                    </#if>
+                </div>
+            </div>
         </div>
 
-        <div class="form-group">
-            <label for="InputSecondName"><@spring.message "second.name.message"/></label>
-            <input id="InputSecondName" type="text"
-                   class="form-control ${(secondNameError??)?string('is-invalid','')}"
-                   name="secondName"
-                   placeholder="<@spring.message "placeholder.for.second.name.message"/>"
-                   value="<#if userDTO??>${userDTO.secondName}</#if>">
-            <#if secondNameError??>
-                <div class="invalid-feedback">${secondNameError}</div>
-            </#if>
+        <div class="row">
+            <div class="col">
+                <div class="form-group">
+                    <label for="InputSecondNameUA"><@spring.message "second.name.message"/>UA</label>
+                    <input id="InputSecondNameUA" type="text"
+                           class="form-control ${(secondNameUAError??)?string('is-invalid','')}"
+                           name="secondNameUA"
+                           placeholder="<@spring.message "placeholder.for.second.name.message"/>"
+                           value="<#if createUserDTO??>${createUserDTO.secondNameUA}</#if>">
+                    <#if secondNameUAError??>
+                        <div class="invalid-feedback">${secondNameUAError}</div>
+                    </#if>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="form-group">
+                    <label for="InputSecondNameEN"><@spring.message "second.name.message"/>EN</label>
+                    <input id="InputSecondNameEN" type="text"
+                           class="form-control ${(secondNameENError??)?string('is-invalid','')}"
+                           name="secondNameEN"
+                           placeholder="<@spring.message "placeholder.for.second.name.message"/>"
+                           value="<#if createUserDTO??>${createUserDTO.secondNameEN}</#if>">
+                    <#if secondNameENError??>
+                        <div class="invalid-feedback">${secondNameENError}</div>
+                    </#if>
+                </div>
+            </div>
         </div>
 
         <button type="submit" class="btn btn-dark btn-lg btn-block">

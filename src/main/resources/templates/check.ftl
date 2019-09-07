@@ -31,7 +31,7 @@
             <tbody>
             <#list check.products as product>
                 <tr>
-                    <td>${product.product.name}</td>
+                    <td>${product.product.internationalName(.locale)}</td>
                     <td>
                         <#if product.product.class.name == 'ruslan.kovshar.final_project.entity.CountProduct'>
                             X${product.value}

@@ -2,10 +2,9 @@ package ruslan.kovshar.final_project.service;
 
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import ruslan.kovshar.final_project.dto.UserDTO;
+import ruslan.kovshar.final_project.dto.CreateUserDTO;
 import ruslan.kovshar.final_project.entity.User;
 import ruslan.kovshar.final_project.enums.Roles;
 import ruslan.kovshar.final_project.exceptions.UserNotFoundException;
@@ -24,12 +23,14 @@ public class UserService implements UserDetailsService {
         this.encoder = encoder;
     }
 
-    public boolean saveNewUser(UserDTO userDTO) {
+    public boolean saveNewUser(CreateUserDTO createUserDTO) {
         User user = User.builder()
-                .email(userDTO.getEmail())
-                .password(encoder.encode(userDTO.getPassword()))
-                .firstName(userDTO.getFirstName())
-                .secondName(userDTO.getSecondName())
+                .email(createUserDTO.getEmail())
+                .password(encoder.encode(createUserDTO.getPassword()))
+                .firstNameUA(createUserDTO.getFirstNameUA())
+                .secondNameUA(createUserDTO.getSecondNameUA())
+                .firstNameEN(createUserDTO.getFirstNameEN())
+                .secondNameEN(createUserDTO.getSecondNameEN())
                 .authorities(Collections.singleton(Roles.CASHIER))
                 .isAccountNonExpired(true)
                 .isAccountNonLocked(true)

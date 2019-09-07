@@ -1,11 +1,15 @@
 package ruslan.kovshar.final_project.entity;
 
 import lombok.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 import ruslan.kovshar.final_project.enums.Roles;
 
 import javax.persistence.*;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
@@ -31,8 +35,17 @@ public class User implements UserDetails {
     @Column(name = "password", nullable = false)
     private String password;
 
-    private String firstName;
-    private String secondName;
+    @Column(name = "first_name_UA", nullable = false)
+    private String firstNameUA;
+
+    @Column(name = "second_name_UA", nullable = false)
+    private String secondNameUA;
+
+    @Column(name = "first_name_EN", nullable = false)
+    private String firstNameEN;
+
+    @Column(name = "second_name_EN", nullable = false)
+    private String secondNameEN;
 
     @ElementCollection(targetClass = Roles.class, fetch = FetchType.EAGER)
     @CollectionTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"))

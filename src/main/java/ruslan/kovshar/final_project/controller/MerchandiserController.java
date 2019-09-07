@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import ruslan.kovshar.final_project.dto.ProductDTO;
+import ruslan.kovshar.final_project.dto.CreateProductDTO;
 import ruslan.kovshar.final_project.entity.CountProduct;
 import ruslan.kovshar.final_project.entity.Product;
 import ruslan.kovshar.final_project.entity.Stock;
@@ -17,8 +17,6 @@ import ruslan.kovshar.final_project.exceptions.ProductNotFoundException;
 import ruslan.kovshar.final_project.exceptions.TransactionException;
 import ruslan.kovshar.final_project.service.ProductService;
 import ruslan.kovshar.final_project.service.StockService;
-
-import javax.transaction.TransactionalException;
 
 @Controller
 @PreAuthorize("hasAuthority('MERCHANDISER')")
@@ -34,23 +32,25 @@ public class MerchandiserController {
     }
 
     @GetMapping
-    public String getMerchandiserPage(@RequestParam(name = "notFound",required = false) String notFound,
+    public String getMerchandiserPage(@RequestParam(name = "notFound", required = false) String notFound,
                                       Model model) {
-        model.addAttribute("notFound",notFound != null);
+        model.addAttribute("notFound", notFound != null);
         return "merchandiser";
     }
 
     @PostMapping
-    public String createProduct(ProductDTO productDTO, Integer count) {
+    public String createProduct(CreateProductDTO createProductDTO, Integer count) {
         Product product;
-        if (productDTO.getType().equals(Types.PIECE_PRODUCT)) {
-            product = new CountProduct(productDTO.getCode(),
-                                        productDTO.getName(),
-                                        productDTO.getPrice());
+        if (createProductDTO.getType().equals(Types.PIECE_PRODUCT)) {
+            product = new CountProduct(createProductDTO.getCode(),
+                    createProductDTO.getNameUA(),
+                    createProductDTO.getNameEN(),
+                    createProductDTO.getPrice());
         } else {
-            product = new WeightProduct(productDTO.getCode(),
-                                        productDTO.getName(),
-                                        productDTO.getPrice());
+            product = new WeightProduct(createProductDTO.getCode(),
+                    createProductDTO.getNameUA(),
+                    createProductDTO.getNameEN(),
+                    createProductDTO.getPrice());
         }
         productService.create(product);
 
@@ -62,7 +62,7 @@ public class MerchandiserController {
     }
 
     @PostMapping("/stock")
-    public String addCount(String name, Integer countOfProduct, Model model) {
+    public String addCount(String name, Integer countOfProduct) {
         Integer code = null;
         try {
             code = Integer.parseInt(name);
@@ -80,15 +80,5 @@ public class MerchandiserController {
             //TODO: fix this
             return "redirect:/merchandiser?notFound";
         }
-
-/*
-        try {
-            Product product = productService.loadByName(name);
-            stockService.update(product, countOfProduct);
-        } catch (TransactionException e) {
-            model.addAttribute("notFound",true);
-            return "merchandiser";
-        }
-        return "redirect:/merchandiser";*/
     }
 }

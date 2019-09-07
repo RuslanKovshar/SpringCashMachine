@@ -19,19 +19,7 @@ public class ProductService {
         productRepository.save(product);
     }
 
-    public Product loadByName(String name) {
-        return productRepository.findByName(name).orElseThrow(ProductNotFoundException::new);
-    }
-
     public Product loadByCodeOrName(Integer code, String name) {
-        return productRepository.findByCodeOrName(code,name).orElseThrow(ProductNotFoundException::new);
-    }
-
-    public Product loadByCode(Integer code) {
-        return productRepository.findByCode(code).orElseThrow(ProductNotFoundException::new);
-    }
-
-    public Product loadById(Long id) {
-        return productRepository.findById(id).get();
+        return productRepository.findByCodeOrNameUAOrNameEN(code,name,name).orElseThrow(ProductNotFoundException::new);
     }
 }

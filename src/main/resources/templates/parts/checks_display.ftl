@@ -1,14 +1,13 @@
-<#import "parts/common.ftl" as c>
-<#import "/spring.ftl" as spring/>
-<@c.common>
-
+<#macro checks orderType>
+    <#import "/spring.ftl" as spring/>
     <div ng-app="check_form" ng-controller="CheckCtrl" ng-model="checks"
-         ng-init="init(${id},0)">
+         ng-init="init('${orderType}',${id},0)">
+
         <nav aria-label="Page navigation example">
             <ul class="pagination">
                 <div ng-repeat="p in [].constructor(page.totalPages) track by $index">
                     <li class="page-item">
-                        <button class="page-link" ng-click="init(${id},$index)">{{$index + 1}}</button>
+                        <button class="page-link" ng-click="init('${orderType}',${id},$index)">{{$index + 1}}</button>
                     </li>
                 </div>
             </ul>
@@ -33,11 +32,9 @@
                             <tr ng-repeat="p in check.products">
                                 <td>{{$index + 1}}</td>
                                 <#if .locale == "ua">
-                                    <td>${.locale}</td>
-                                    <td>{{p.product.nameEN}}</td>
-                                <#else >
-                                    <td>${.locale}</td>
                                     <td>{{p.product.nameUA}}</td>
+                                <#else >
+                                    <td>{{p.product.nameEN}}</td>
                                 </#if>
                                 <td>{{p.price}}</td>
                             </tr>
@@ -52,7 +49,4 @@
             </div>
         </div>
     </div>
-
-    <script src="js/angular.min.js"></script>
-    <script src="js/check.js"></script>
-</@c.common>
+</#macro>

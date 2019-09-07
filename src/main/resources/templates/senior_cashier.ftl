@@ -7,4 +7,10 @@
             checks
         </button>
     </form>
+
+    <form action="/x-report">
+        <button type="submit" class="btn btn-success btn-lg btn-block">
+            X-Report
+        </button>
+    </form>
 </@c.common>

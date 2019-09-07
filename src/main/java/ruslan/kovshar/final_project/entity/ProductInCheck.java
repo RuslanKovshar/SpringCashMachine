@@ -2,8 +2,12 @@ package ruslan.kovshar.final_project.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
+import org.springframework.web.servlet.i18n.SessionLocaleResolver;
+import ruslan.kovshar.final_project.dto.CreateProductDTO;
+import ruslan.kovshar.final_project.dto.GetProductDTO;
 
 import javax.persistence.*;
+import javax.servlet.http.HttpServletRequest;
 import java.math.BigDecimal;
 
 @Entity

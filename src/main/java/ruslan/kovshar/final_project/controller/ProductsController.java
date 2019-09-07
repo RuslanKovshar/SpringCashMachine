@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.i18n.SessionLocaleResolver;
+import ruslan.kovshar.final_project.dto.GetProductDTO;
 import ruslan.kovshar.final_project.entity.Check;
 import ruslan.kovshar.final_project.entity.Product;
 import ruslan.kovshar.final_project.entity.ProductInCheck;
@@ -17,6 +19,7 @@ import ruslan.kovshar.final_project.service.CheckService;
 import ruslan.kovshar.final_project.service.ProductService;
 import ruslan.kovshar.final_project.service.StockService;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Optional;
 
 @Controller
@@ -46,9 +49,11 @@ public class ProductsController {
     @GetMapping("/check/product/{id}")
     public String getProductPage(@PathVariable(name = "id", required = false) Product product,
                                  @RequestParam(name = "error", required = false) String error,
-                                 Model model) {
+                                 Model model,
+                                 SessionLocaleResolver resolver,
+                                 HttpServletRequest req) {
 
-        model.addAttribute("product", product);
+        model.addAttribute("product", new GetProductDTO(product, resolver, req));
         model.addAttribute("error", error != null);
         return "product";
     }
@@ -87,7 +92,10 @@ public class ProductsController {
     }
 
     @PostMapping("/product/add/{id}")
-    public String addProductToCheck(@PathVariable(name = "id") Product product, Number number) {
+    public String addProductToCheck(@PathVariable(name = "id") Product product,
+                                    Number number,
+                                    SessionLocaleResolver resolver,
+                                    HttpServletRequest req) {
         try {
             stockService.update(product, -number.intValue());
         } catch (TransactionException e) {

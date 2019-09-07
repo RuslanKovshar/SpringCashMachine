@@ -1,8 +1,6 @@
 package ruslan.kovshar.final_project.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
-import ruslan.kovshar.final_project.enums.Types;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -26,26 +24,21 @@ public abstract class Product {
     @Column(nullable = false)
     protected Integer code;
 
-    @Column(nullable = false)
-    protected String name;
+    @Column(name = "name_UA", nullable = false)
+    protected String nameUA;
+
+    @Column(name = "name_EN", nullable = false)
+    protected String nameEN;
 
     @Column(nullable = false)
     protected BigDecimal price;
 
-    /*@Column(nullable = false)
-    @Enumerated(EnumType.STRING)
-    protected Types type;*/
-
-   /* @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "stock_id")
-    private Stock stock;*/
-
     public abstract BigDecimal calculatePrice(Number value);
 
-    public Product(Integer code, String name, BigDecimal price) {
+    public Product(Integer code, String nameUA, String nameEN, BigDecimal price) {
         this.code = code;
-        this.name = name;
+        this.nameUA = nameUA;
+        this.nameEN = nameEN;
         this.price = price;
     }
 
@@ -56,12 +49,19 @@ public abstract class Product {
         Product product = (Product) o;
         return Objects.equals(id, product.id) &&
                 Objects.equals(code, product.code) &&
-                Objects.equals(name, product.name) &&
+                Objects.equals(nameUA, product.nameUA) &&
                 Objects.equals(price, product.price);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, code, name, price);
+        return Objects.hash(id, code, nameUA, price);
+    }
+
+    public String internationalName(String lang) {
+        if (lang.equals("en")) {
+            return nameEN;
+        }
+        return nameUA;
     }
 }

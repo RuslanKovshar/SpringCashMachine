@@ -8,9 +8,12 @@ import java.math.BigDecimal;
 
 @Setter
 @Getter
-public class ProductDTO {
-    private String name;
+public class CreateProductDTO {
+
+    private String nameUA;
+    private String nameEN;
     private Integer code;
     private BigDecimal price;
     private Types type;
+
 }

@@ -25,7 +25,7 @@ public class Check {
 
     @OneToMany(cascade = CascadeType.ALL,
             fetch = FetchType.EAGER)
-    private List<ProductInCheck> products = new ArrayList<>();
+    private Set<ProductInCheck> products = new HashSet<>();
 
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)

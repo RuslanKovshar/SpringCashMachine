@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import ruslan.kovshar.final_project.dto.UserDTO;
+import ruslan.kovshar.final_project.dto.CreateUserDTO;
 import ruslan.kovshar.final_project.service.UserService;
 
 import javax.validation.Valid;
@@ -30,17 +30,17 @@ public class RegistrationController {
     }
 
     @PostMapping
-    public String registrateNewUser(@Valid UserDTO userDTO, BindingResult bindingResult, Model model) {
+    public String registrateNewUser(@Valid CreateUserDTO createUserDTO, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             Map<String, String> errorsMap = ControllerUtils.getErrors(bindingResult);
             model.mergeAttributes(errorsMap);
-            model.addAttribute("userDTO", userDTO);
+            model.addAttribute("userDTO", createUserDTO);
             return "registration";
         } else {
-            if (userService.saveNewUser(userDTO)) {
+            if (userService.saveNewUser(createUserDTO)) {
                 return "redirect:/registration?success";
             } else {
-                model.addAttribute("userDTO", userDTO);
+                model.addAttribute("userDTO", createUserDTO);
                 return "registration";
             }
         }

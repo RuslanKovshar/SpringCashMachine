@@ -11,30 +11,38 @@
             <th scope="col"><@spring.message "email.message"/></th>
             <th scope="col"><@spring.message "user.first.name.message"/></th>
             <th scope="col"><@spring.message "user.second.name.message"/></th>
-            <th scope="col"><@spring.message "roles.message"/></th>
         </tr>
         </thead>
         <tbody>
         <tr>
-            <td>${user.id}</td>
-            <td>${user.email}</td>
-            <td>${user.firstName}</td>
-            <td>${user.secondName}</td>
-            <td><#list user.authorities as r >${r}<#sep>, </#list></td>
+            <td>${userDTO.id}</td>
+            <td>${userDTO.email}</td>
+            <td>${userDTO.firstName}</td>
+            <td>${userDTO.secondName}</td>
         </tr>
         </tbody>
     </table>
 
     <form action="/open_check">
-            <button class="btn btn-lg btn-success btn-block mt-2"><@spring.message "open.check.message"/></button>
+        <button class="btn btn-lg btn-success btn-block mt-2"><@spring.message "open.check.message"/></button>
     </form>
     <#if isMerchandiser>
         <form action="/merchandiser">
-                <button class="btn btn-lg btn-success btn-block mt-2"><@spring.message "merchandiser.menu.message"/></button>
+            <button class="btn btn-lg btn-success btn-block mt-2"><@spring.message "merchandiser.menu.message"/></button>
         </form>
     </#if>
 
-    <form action="/senior_cashier_menu">
-        <button class="btn btn-lg btn-success btn-block mt-2"><@spring.message "open.check.message"/></button>
-    </form>
+    <#if isSeniorCashier>
+        <form action="/senior_cashier/x-report">
+            <button type="submit" class="btn btn-success btn-lg btn-block">
+                X-Report
+            </button>
+        </form>
+
+        <form action="/senior_cashier/z-report">
+            <button type="submit" class="btn btn-success btn-lg btn-block">
+                Z-Report
+            </button>
+        </form>
+    </#if>
 </@c.common>

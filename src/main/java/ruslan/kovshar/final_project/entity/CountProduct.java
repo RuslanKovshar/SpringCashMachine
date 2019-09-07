@@ -16,7 +16,7 @@ public class CountProduct extends Product {
     public CountProduct() {
     }
 
-    public CountProduct(Integer code, String name, BigDecimal price) {
-        super(code, name, price);
+    public CountProduct(Integer code, String nameUA, String nameEN, BigDecimal price) {
+        super(code, nameUA, nameEN, price);
     }
 }

@@ -4,24 +4,21 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ruslan.kovshar.final_project.entity.Check;
 import ruslan.kovshar.final_project.entity.User;
 import ruslan.kovshar.final_project.repository.CheckRepository;
 
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class CheckService {
 
     private final CheckRepository checkRepository;
-    private Check check;
 
     public CheckService(CheckRepository checkRepository) {
         this.checkRepository = checkRepository;
-    }
-
-    public Check openCheck() {
-        return new Check();
     }
 
     public void saveCheck(Check check) {
@@ -34,6 +31,14 @@ public class CheckService {
 
     public Page<Check> getAllChecksByUser(User user, Pageable pageable) {
         return checkRepository.findAllByUser(user, pageable);
+    }
+
+    public List<Check> getAllChecksByUser(User user) {
+        return checkRepository.findAllByUser(user);
+    }
+
+    public void clearChecks(List<Check> checks) {
+        checkRepository.deleteAll(checks);
     }
 
 }
