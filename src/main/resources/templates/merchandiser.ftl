@@ -15,11 +15,16 @@
         <form action="/merchandiser" method="post" class="form-group">
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
 
-            <label for="inputNameUA"><@spring.message "name.message"/>UA</label>
-            <input id="inputNameUA" type="text" name="nameUA" class="form-control">
-
-            <label for="inputNameEN"><@spring.message "name.message"/>EN</label>
-            <input id="inputNameEN" type="text" name="nameEN" class="form-control">
+            <div class="row">
+                <div class="col">
+                    <label for="inputNameUA"><@spring.message "name.message"/>UA</label>
+                    <input id="inputNameUA" type="text" name="nameUA" class="form-control">
+                </div>
+                <div class="col">
+                    <label for="inputNameEN"><@spring.message "name.message"/>EN</label>
+                    <input id="inputNameEN" type="text" name="nameEN" class="form-control">
+                </div>
+            </div>
 
             <label for="inputCode"><@spring.message "code.message"/></label>
             <input id="inputCode" type="text" name="code" class="form-control">
@@ -52,7 +57,7 @@
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
 
 
-            <label for="inputName1"><@spring.message "name.message"/></label>
+            <label for="inputName1"><@spring.message "input.code.or.name.message"/></label>
             <input id="inputName1" type="text" name="name" class="form-control <#if notFound>is-invalid</#if>">
 
             <#if notFound>

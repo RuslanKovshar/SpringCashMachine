@@ -4,10 +4,10 @@ app.controller("CheckCtrl", function ($scope, $http) {
     $scope.checks = [];
     $scope.page;
 
-    $scope.init = function (orderType,userId, pageNumber) {
+    $scope.init = function (userId, pageNumber) {
         $http({
             method: "GET",
-            url: "/api/cashier/" + userId + "/" + orderType + "?page=" + pageNumber,
+            url: "/api/cashier/" + userId + "/order-x?page=" + pageNumber,
             headers: {"Content-Type": "application/json"}
         }).then(function (data) {
             $scope.page = data.data;

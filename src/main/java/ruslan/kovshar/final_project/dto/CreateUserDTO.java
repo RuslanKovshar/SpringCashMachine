@@ -1,18 +1,13 @@
 package ruslan.kovshar.final_project.dto;
 
-import lombok.*;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.servlet.i18n.SessionLocaleResolver;
-import ruslan.kovshar.final_project.entity.User;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
-import javax.persistence.Transient;
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 
 @ToString
-//@NoArgsConstructor
-//@AllArgsConstructor
 @Getter
 @Setter
 public class CreateUserDTO {

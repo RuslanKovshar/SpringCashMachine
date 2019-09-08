@@ -1,6 +1,7 @@
 package ruslan.kovshar.final_project.entity;
 
 import lombok.*;
+import ruslan.kovshar.final_project.enums.Types;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -12,7 +13,6 @@ import java.util.Objects;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-//@EqualsAndHashCode
 @Table(name = "products")
 public abstract class Product {
 
@@ -33,13 +33,17 @@ public abstract class Product {
     @Column(nullable = false)
     protected BigDecimal price;
 
+    @Enumerated(EnumType.STRING)
+    protected Types type;
+
     public abstract BigDecimal calculatePrice(Number value);
 
-    public Product(Integer code, String nameUA, String nameEN, BigDecimal price) {
+    public Product(Integer code, String nameUA, String nameEN, BigDecimal price,Types type) {
         this.code = code;
         this.nameUA = nameUA;
         this.nameEN = nameEN;
         this.price = price;
+        this.type = type;
     }
 
     @Override

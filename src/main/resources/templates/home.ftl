@@ -34,14 +34,14 @@
 
     <#if isSeniorCashier>
         <form action="/senior_cashier/x-report">
-            <button type="submit" class="btn btn-success btn-lg btn-block">
-                X-Report
+            <button type="submit" class="btn btn-success btn-lg btn-block mt-2">
+                <@spring.message "x-report.message"/>
             </button>
         </form>
 
         <form action="/senior_cashier/z-report">
-            <button type="submit" class="btn btn-success btn-lg btn-block">
-                Z-Report
+            <button type="submit" class="btn btn-success btn-lg btn-block mt-2">
+                <@spring.message "z-report.message"/>
             </button>
         </form>
     </#if>

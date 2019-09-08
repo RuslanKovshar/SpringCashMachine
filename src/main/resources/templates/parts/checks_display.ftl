@@ -1,31 +1,20 @@
-<#macro checks orderType>
-    <#import "/spring.ftl" as spring/>
-    <div ng-app="check_form" ng-controller="CheckCtrl" ng-model="checks"
-         ng-init="init('${orderType}',${id},0)">
-
-        <nav aria-label="Page navigation example">
-            <ul class="pagination">
-                <div ng-repeat="p in [].constructor(page.totalPages) track by $index">
-                    <li class="page-item">
-                        <button class="page-link" ng-click="init('${orderType}',${id},$index)">{{$index + 1}}</button>
-                    </li>
-                </div>
-            </ul>
-        </nav>
+<#import "/spring.ftl" as spring/>
+<#import "pagination.ftl" as pagination>
+<#macro checks>
 
         <div class="card-columns">
             <div ng-repeat="check in checks">
                 <div class="card border-dark mt-4">
                     <div class="card-header">
-                        Check number: {{check.id}}
+                        <@spring.message "check.number"/> {{check.id}}
                     </div>
                     <div class="card-body">
                         <table class="table table-hover">
                             <thead>
                             <tr>
                                 <th scope="col">#</th>
-                                <th scope="col">Name</th>
-                                <th scope="col">Price</th>
+                                <th scope="col"><@spring.message "name.message"/></th>
+                                <th scope="col"><@spring.message "product.price.message"/></th>
                             </tr>
                             </thead>
                             <tbody>
@@ -48,5 +37,4 @@
                 </div>
             </div>
         </div>
-    </div>
 </#macro>

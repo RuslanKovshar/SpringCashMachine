@@ -1,11 +1,9 @@
 package ruslan.kovshar.final_project.entity;
 
-import lombok.Builder;
 import ruslan.kovshar.final_project.enums.Types;
 
 import javax.persistence.Entity;
 import java.math.BigDecimal;
-import java.math.MathContext;
 import java.math.RoundingMode;
 
 @Entity
@@ -18,7 +16,7 @@ public class WeightProduct extends Product {
     public WeightProduct() {
     }
 
-    public WeightProduct(Integer code, String nameUA, String nameEN, BigDecimal price) {
-        super(code, nameUA, nameEN, price);
+    public WeightProduct(Integer code, String nameUA, String nameEN, BigDecimal price, Types type) {
+        super(code, nameUA, nameEN, price, type);
     }
 }

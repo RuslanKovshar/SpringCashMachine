@@ -1,5 +1,6 @@
 package ruslan.kovshar.final_project.controller;
 
+import org.apache.log4j.Logger;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,6 +24,8 @@ import ruslan.kovshar.final_project.service.StockService;
 @RequestMapping("/merchandiser")
 public class MerchandiserController {
 
+    private static final Logger log = Logger.getLogger(MerchandiserController.class);
+
     private final ProductService productService;
     private final StockService stockService;
 
@@ -45,12 +48,14 @@ public class MerchandiserController {
             product = new CountProduct(createProductDTO.getCode(),
                     createProductDTO.getNameUA(),
                     createProductDTO.getNameEN(),
-                    createProductDTO.getPrice());
+                    createProductDTO.getPrice(),
+                    createProductDTO.getType());
         } else {
             product = new WeightProduct(createProductDTO.getCode(),
                     createProductDTO.getNameUA(),
                     createProductDTO.getNameEN(),
-                    createProductDTO.getPrice());
+                    createProductDTO.getPrice(),
+                    createProductDTO.getType());
         }
         productService.create(product);
 
@@ -74,11 +79,11 @@ public class MerchandiserController {
             stockService.update(product, countOfProduct);
             return "redirect:/merchandiser";
         } catch (ProductNotFoundException e) {
+            log.error("Product not found");
             return "redirect:/merchandiser?notFound";
         } catch (TransactionException e) {
-            e.printStackTrace();
-            //TODO: fix this
-            return "redirect:/merchandiser?notFound";
+            log.error("Transaction error");
+            return "redirect:/merchandiser";
         }
     }
 }

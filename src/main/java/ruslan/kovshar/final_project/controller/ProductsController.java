@@ -1,5 +1,6 @@
 package ruslan.kovshar.final_project.controller;
 
+import org.apache.log4j.Logger;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,6 +25,8 @@ import java.util.Optional;
 
 @Controller
 public class ProductsController {
+
+    private static final Logger log = Logger.getLogger(ProductsController.class);
 
     private final ProductService productService;
     private final CheckService checkService;
@@ -70,6 +73,7 @@ public class ProductsController {
             Product product = productService.loadByCodeOrName(code, name);
             return "redirect:/check/product/" + product.getId();
         } catch (ProductNotFoundException e) {
+            log.error("Product not found");
             return "redirect:/check?notFound";
         }
     }
@@ -99,6 +103,7 @@ public class ProductsController {
         try {
             stockService.update(product, -number.intValue());
         } catch (TransactionException e) {
+            log.error("Transaction error");
             return "redirect:/check/product/" + product.getId() + "?error";
         }
 
@@ -126,11 +131,5 @@ public class ProductsController {
         check.setTotalPrice(check.getTotalPrice().add(product.calculatePrice(number)));
 
         return "redirect:/check";
-    }
-
-    @GetMapping("/get_checks")
-    public String getAllChecks(Model model) {
-        model.addAttribute("checks", checkService.getAllChecks());
-        return "checks";
     }
 }

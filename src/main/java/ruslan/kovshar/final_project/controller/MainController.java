@@ -32,13 +32,10 @@ public class MainController {
     }
 
     @GetMapping("/api/cashier/{id}/order-z")
-    public List<Check> getChecksAfterZ(@PathVariable(name = "id") User user,
-                                       @PageableDefault(sort = {"id"}, direction = Sort.Direction.DESC, size = 6) Pageable pageable) {
-
+    public List<Check> getChecksAfterZ(@PathVariable(name = "id") User user) {
         user.setChecks(Collections.emptySet());
         List<Check> checks = new ArrayList<>(checkService.getAllChecksByUser(user));
         checkService.clearChecks(checkService.getAllChecksByUser(user));
-
         return checks;
     }
 

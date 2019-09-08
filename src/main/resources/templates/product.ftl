@@ -15,7 +15,7 @@
 
         <div class="row">
             <div class="col-4">
-                <#if product.class.name == 'ruslan.kovshar.final_project.entity.CountProduct'>
+                <#if product.type == "PIECE_PRODUCT">
                     <h2><em><@spring.message "price.for.one.product.message"/></em></h2>
                 <#else>
                     <h2><em><@spring.message "price.for.one.kg.message"/></em></h2>
@@ -26,7 +26,7 @@
             </div>
         </div>
 
-        <#if product.class.name == 'ruslan.kovshar.final_project.entity.CountProduct'>
+        <#if product.type == "PIECE_PRODUCT">
             <label for="inputNumber"><@spring.message "input.count.message"/></label>
         <#else>
             <label for="inputNumber"><@spring.message "input.weight.message"/></label>
