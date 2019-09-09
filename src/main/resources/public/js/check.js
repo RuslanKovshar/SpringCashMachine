@@ -7,7 +7,7 @@ app.controller("CheckCtrl", function ($scope, $http) {
     $scope.init = function (userId, pageNumber) {
         $http({
             method: "GET",
-            url: "/api/cashier/" + userId + "/order-x?page=" + pageNumber,
+            url: "/api/cashier/" + userId + "/x-report?page=" + pageNumber,
             headers: {"Content-Type": "application/json"}
         }).then(function (data) {
             $scope.page = data.data;

@@ -9,6 +9,9 @@ import ruslan.kovshar.final_project.exceptions.ProductNotFoundException;
 import ruslan.kovshar.final_project.exceptions.TransactionException;
 import ruslan.kovshar.final_project.repository.StockRepository;
 
+import static ruslan.kovshar.final_project.view.ExceptionsMessages.PRODUCT_NOT_FOUND;
+import static ruslan.kovshar.final_project.view.ExceptionsMessages.TRANSACTION_EXCEPTION;
+
 @Service
 public class StockService {
 
@@ -24,10 +27,11 @@ public class StockService {
 
     @Transactional(propagation = Propagation.REQUIRES_NEW,rollbackFor = TransactionException.class)
     public void update(Product product, Integer newCount) throws TransactionException {
-        Stock stock = stockRepository.findByProduct(product).orElseThrow(ProductNotFoundException::new);
+        Stock stock = stockRepository.findByProduct(product)
+                .orElseThrow(()-> new ProductNotFoundException(PRODUCT_NOT_FOUND));
 
         if (stock.getCountOfProduct() + newCount < 0) {
-            throw new TransactionException("Not enough products in stock");
+            throw new TransactionException(TRANSACTION_EXCEPTION);
         }
 
         stock.setCountOfProduct(stock.getCountOfProduct() + newCount);

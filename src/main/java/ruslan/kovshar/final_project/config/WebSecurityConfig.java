@@ -13,9 +13,13 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
+import ruslan.kovshar.final_project.enums.Roles;
 import ruslan.kovshar.final_project.service.UserService;
 
 import java.util.Locale;
+
+import static ruslan.kovshar.final_project.view.TextConstants.LANG_PARAM_NAME;
+import static ruslan.kovshar.final_project.view.URIs.*;
 
 @Configuration
 @EnableWebSecurity
@@ -41,15 +45,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements W
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                    //.antMatchers("/").permitAll()
-                    .antMatchers("/login").permitAll()
-                    .antMatchers("/registration").permitAll()
+                    .antMatchers(MERCHANDISER).hasAuthority(Roles.MERCHANDISER.name())
+                    .antMatchers(LOGIN).permitAll()
+                    .antMatchers(REGISTRATION).permitAll()
                     .anyRequest().authenticated()
                 .and()
                     .rememberMe()
                     .tokenValiditySeconds(86400)
                 .and()
-                    .formLogin().loginPage("/login").permitAll()
+                    .formLogin().loginPage(LOGIN).permitAll()
                 .and()
                     .logout().permitAll()
                 .and();
@@ -65,12 +69,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements W
     @Bean
     public LocaleChangeInterceptor localeChangeInterceptor() {
         LocaleChangeInterceptor lci = new LocaleChangeInterceptor();
-        lci.setParamName("lang");
+        lci.setParamName(LANG_PARAM_NAME);
         return lci;
     }
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(localeChangeInterceptor()).addPathPatterns("/**");
+        registry.addInterceptor(localeChangeInterceptor()).addPathPatterns(ANY_PATH);
     }
 }

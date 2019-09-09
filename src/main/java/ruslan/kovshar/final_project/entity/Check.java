@@ -11,12 +11,14 @@ import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Set;
 
+import static ruslan.kovshar.final_project.view.TablesConstants.*;
+
 @Setter
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "checks")
+@Table(name = TABLE_CHECKS_NAME)
 public class Check {
 
     @Id
@@ -29,9 +31,9 @@ public class Check {
 
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = CHECK_USER_ID)
     private User user;
 
-    @Column(name = "total_price")
+    @Column(name = CHECK_TOTAL_PRICE)
     private BigDecimal totalPrice = BigDecimal.ZERO;
 }

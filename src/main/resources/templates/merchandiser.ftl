@@ -11,29 +11,51 @@
     </button>
     <br>
 
-    <div class="collapse" id="collapseExample">
+    <div class="collapse <#if createProductDTO??>show</#if>" id="collapseExample">
         <form action="/merchandiser" method="post" class="form-group">
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
 
             <div class="row">
                 <div class="col">
                     <label for="inputNameUA"><@spring.message "name.message"/>UA</label>
-                    <input id="inputNameUA" type="text" name="nameUA" class="form-control">
+                    <input id="inputNameUA" type="text" name="nameUA"
+                           class="form-control ${(nameUAError??)?string('is-invalid','')}"
+                           value="<#if createProductDTO??>${createProductDTO.nameUA}</#if>">
+                    <#if nameUAError??>
+                        <div class="invalid-feedback">${nameUAError}</div>
+                    </#if>
                 </div>
                 <div class="col">
                     <label for="inputNameEN"><@spring.message "name.message"/>EN</label>
-                    <input id="inputNameEN" type="text" name="nameEN" class="form-control">
+                    <input id="inputNameEN" type="text" name="nameEN"
+                           class="form-control ${(nameENError??)?string('is-invalid','')}"
+                           value="<#if createProductDTO??>${createProductDTO.nameEN}</#if>">
+                    <#if nameENError??>
+                        <div class="invalid-feedback">${nameENError}</div>
+                    </#if>
                 </div>
             </div>
 
             <label for="inputCode"><@spring.message "code.message"/></label>
-            <input id="inputCode" type="text" name="code" class="form-control">
+            <input id="inputCode" type="text" name="code"
+                   class="form-control ${(codeError??)?string('is-invalid','')}">
+            <#if codeError??>
+                <div class="invalid-feedback">${codeError}</div>
+            </#if>
 
             <label for="inputPrice"><@spring.message "product.price.message"/></label>
-            <input id="inputPrice" type="text" name="price" class="form-control">
+            <input id="inputPrice" type="text" name="price"
+                   class="form-control ${(priceError??)?string('is-invalid','')}">
+            <#if priceError??>
+                <div class="invalid-feedback">${priceError}</div>
+            </#if>
 
             <label for="inputCount"><@spring.message "count.on.stock.message"/></label>
-            <input id="inputCount" type="text" name="count" class="form-control">
+            <input id="inputCount" type="text" name="count"
+                   class="form-control ${(countError??)?string('is-invalid','')}">
+            <#if countError??>
+                <div class="invalid-feedback">${countError}</div>
+            </#if>
 
             <label for="inputType"><@spring.message "type.message"/></label>
             <select id="inputType" name="type" class="form-control">
@@ -52,22 +74,23 @@
             aria-controls="collapseExample">
         <@spring.message "add.products.to.stock.message"/>
     </button>
-    <div class="collapse <#if notFound>show</#if>" id="collapseExample1">
+    <div class="collapse <#if notFound!false>show</#if>" id="collapseExample1">
         <form action="/merchandiser/stock" method="post" class="form-group">
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
 
 
             <label for="inputName1"><@spring.message "input.code.or.name.message"/></label>
-            <input id="inputName1" type="text" name="name" class="form-control <#if notFound>is-invalid</#if>">
+            <input id="inputName1" type="text" name="name" class="form-control <#if notFound!false>is-invalid</#if>">
 
-            <#if notFound>
-                    <div class="invalid-feedback"><@spring.message "product.not.found.message"/></div>
+            <#if notFound!false>
+                <div class="invalid-feedback"><@spring.message "product.not.found.message"/></div>
             </#if>
 
             <label for="inputCount1"><@spring.message "product.count.message"/></label>
-            <input id="inputCount1" type="text" name="countOfProduct" class="form-control">
+            <input id="inputCount1" type="number" name="countOfProduct" class="form-control" required>
 
-            <button type="submit" class="btn btn-lg btn-danger btn-block mt-2"><@spring.message "create.btn.message"/></button>
+            <button type="submit"
+                    class="btn btn-lg btn-danger btn-block mt-2"><@spring.message "create.btn.message"/></button>
         </form>
     </div>
 </@c.common>

@@ -7,13 +7,15 @@ import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Objects;
 
+import static ruslan.kovshar.final_project.view.TablesConstants.*;
+
 @Entity
 @Setter
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-@Table(name = "products")
+@Table(name = TABLE_PRODUCTS_NAME)
 public abstract class Product {
 
     @Id
@@ -24,10 +26,10 @@ public abstract class Product {
     @Column(nullable = false)
     protected Integer code;
 
-    @Column(name = "name_UA", nullable = false)
+    @Column(name = PRODUCT_NAME_UA, nullable = false)
     protected String nameUA;
 
-    @Column(name = "name_EN", nullable = false)
+    @Column(name = PRODUCT_NAME_EN, nullable = false)
     protected String nameEN;
 
     @Column(nullable = false)

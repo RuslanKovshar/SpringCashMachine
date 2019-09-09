@@ -13,8 +13,15 @@ import ruslan.kovshar.final_project.service.UserService;
 import javax.validation.Valid;
 import java.util.Map;
 
+import static ruslan.kovshar.final_project.view.Pages.REGISTRATION_PAGE;
+import static ruslan.kovshar.final_project.view.RequestParams.PARAM;
+import static ruslan.kovshar.final_project.view.RequestParams.SUCCESS;
+import static ruslan.kovshar.final_project.view.TextConstants.USER_DTO;
+import static ruslan.kovshar.final_project.view.URIs.REDIRECT;
+import static ruslan.kovshar.final_project.view.URIs.REGISTRATION;
+
 @Controller
-@RequestMapping("/registration")
+@RequestMapping(REGISTRATION)
 public class RegistrationController {
 
     private final UserService userService;
@@ -24,9 +31,9 @@ public class RegistrationController {
     }
 
     @GetMapping
-    public String getRegistrationPage(@RequestParam(name = "success", required = false) String success, Model model) {
-        model.addAttribute("success", success != null);
-        return "registration";
+    public String getRegistrationPage(@RequestParam(name = SUCCESS, required = false) String success, Model model) {
+        model.addAttribute(SUCCESS, success != null);
+        return REGISTRATION_PAGE;
     }
 
     @PostMapping
@@ -34,14 +41,14 @@ public class RegistrationController {
         if (bindingResult.hasErrors()) {
             Map<String, String> errorsMap = ControllerUtils.getErrors(bindingResult);
             model.mergeAttributes(errorsMap);
-            model.addAttribute("userDTO", createUserDTO);
-            return "registration";
+            model.addAttribute(USER_DTO, createUserDTO);
+            return REGISTRATION_PAGE;
         } else {
             if (userService.saveNewUser(createUserDTO)) {
-                return "redirect:/registration?success";
+                return REDIRECT + REGISTRATION + PARAM + SUCCESS;
             } else {
-                model.addAttribute("userDTO", createUserDTO);
-                return "registration";
+                model.addAttribute(USER_DTO, createUserDTO);
+                return REGISTRATION_PAGE;
             }
         }
     }

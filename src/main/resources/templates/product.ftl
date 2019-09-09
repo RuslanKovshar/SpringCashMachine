@@ -33,7 +33,7 @@
         </#if>
         <div class="row">
             <div class="col-8">
-                <input type="number" id="inputNumber" name="number" min="1" class="form-control <#if error>is-invalid</#if>">
+                <input type="number" id="inputNumber" name="number" min="1" required class="form-control <#if error>is-invalid</#if>">
                 <#if error>
                     <div class="invalid-feedback"><@spring.message "not.enough.product.message"/></div>
                 </#if>

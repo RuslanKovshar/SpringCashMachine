@@ -11,13 +11,20 @@ import ruslan.kovshar.final_project.entity.User;
 
 import javax.servlet.http.HttpServletRequest;
 
+import static ruslan.kovshar.final_project.view.Pages.HOME_PAGE;
+import static ruslan.kovshar.final_project.view.TextConstants.USER_DTO;
+import static ruslan.kovshar.final_project.view.URIs.HOME;
+
 @Controller
-@RequestMapping("/")
+@RequestMapping(HOME)
 public class HomeController {
 
     @GetMapping
-    public String getHomePage(@AuthenticationPrincipal User user, Model model,HttpServletRequest request,SessionLocaleResolver localeResolver) {
-        model.addAttribute("userDTO",new GetUserDTO(user,localeResolver,request));
-        return "home";
+    public String getHomePage(@AuthenticationPrincipal User user,
+                              Model model,
+                              HttpServletRequest request,
+                              SessionLocaleResolver localeResolver) {
+        model.addAttribute(USER_DTO, new GetUserDTO(user, localeResolver, request));
+        return HOME_PAGE;
     }
 }

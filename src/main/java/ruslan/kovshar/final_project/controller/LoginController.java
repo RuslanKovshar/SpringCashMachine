@@ -7,22 +7,28 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import static ruslan.kovshar.final_project.view.ExceptionsMessages.BAG_CREDENTIALS;
+import static ruslan.kovshar.final_project.view.Pages.LOGIN_PAGE;
+import static ruslan.kovshar.final_project.view.RequestParams.ERROR;
+import static ruslan.kovshar.final_project.view.RequestParams.LOGOUT;
+import static ruslan.kovshar.final_project.view.URIs.LOGIN;
+
 @Controller
-@RequestMapping("/login")
+@RequestMapping(LOGIN)
 public class LoginController {
 
     private static final Logger log = Logger.getLogger(LoginController.class);
 
     @GetMapping
-    public String getLoginPage(@RequestParam(name = "error", required = false) String error,
-                               @RequestParam(name = "logout", required = false) String logout,
+    public String getLoginPage(@RequestParam(name = ERROR, required = false) String error,
+                               @RequestParam(name = LOGOUT, required = false) String logout,
                                Model model) {
-        model.addAttribute("error", error != null);
+        model.addAttribute(ERROR, error != null);
         if (error != null) {
-            log.error("Bad credentials");
+            log.error(BAG_CREDENTIALS);
         }
-        model.addAttribute("logout", logout != null);
-        return "login";
+        model.addAttribute(LOGOUT, logout != null);
+        return LOGIN_PAGE;
     }
 
 }

@@ -4,10 +4,9 @@ app.controller("ZCtrl", function ($scope, $http) {
     $scope.checks = [];
 
     $scope.init = function (userId) {
-        window.alert(userId);
         $http({
             method: "GET",
-            url: "/api/cashier/" + userId + "/order-z",
+            url: "/api/cashier/" + userId + "/z-report",
             headers: {"Content-Type": "application/json"}
         }).then(function (data) {
             $scope.checks = data.data;

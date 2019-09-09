@@ -5,6 +5,8 @@ import ruslan.kovshar.final_project.entity.Product;
 import ruslan.kovshar.final_project.exceptions.ProductNotFoundException;
 import ruslan.kovshar.final_project.repository.ProductRepository;
 
+import static ruslan.kovshar.final_project.view.ExceptionsMessages.PRODUCT_NOT_FOUND;
+
 @Service
 public class ProductService {
 
@@ -19,6 +21,7 @@ public class ProductService {
     }
 
     public Product loadByCodeOrName(Integer code, String name) {
-        return productRepository.findByCodeOrNameUAOrNameEN(code,name,name).orElseThrow(ProductNotFoundException::new);
+        return productRepository.findByCodeOrNameUAOrNameEN(code,name,name)
+                .orElseThrow(()-> new ProductNotFoundException(PRODUCT_NOT_FOUND));
     }
 }
