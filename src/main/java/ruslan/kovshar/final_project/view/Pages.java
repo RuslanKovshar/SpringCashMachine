@@ -9,4 +9,6 @@ public interface Pages {
     String REGISTRATION_PAGE = "registration";
     String X_REPORT_PAGE = "x-report";
     String Z_REPORT_PAGE = "z_report";
+    String CHECKS_PAGE = "checks";
+    String PAYMENT_PAGE = "payment";
 }

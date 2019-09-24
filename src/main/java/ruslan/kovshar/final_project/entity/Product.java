@@ -19,7 +19,7 @@ import static ruslan.kovshar.final_project.view.TablesConstants.*;
 public abstract class Product {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false)
     protected Long id;
 

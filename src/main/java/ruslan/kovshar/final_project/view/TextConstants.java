@@ -10,4 +10,5 @@ public interface TextConstants {
     String CREATE_PRODUCT_DTO = "createProductDTO";
     String LANG_PARAM_NAME = "lang";
     String ERROR_PARAM = "Error";
+    String EXIST = "exist";
 }

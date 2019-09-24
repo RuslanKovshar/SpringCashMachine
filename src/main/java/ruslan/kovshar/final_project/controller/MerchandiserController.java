@@ -18,19 +18,21 @@ import ruslan.kovshar.final_project.exceptions.ProductNotFoundException;
 import ruslan.kovshar.final_project.exceptions.TransactionException;
 import ruslan.kovshar.final_project.service.ProductService;
 import ruslan.kovshar.final_project.service.StockService;
+import ruslan.kovshar.final_project.view.Pages;
+import ruslan.kovshar.final_project.view.Params;
+import ruslan.kovshar.final_project.view.TextConstants;
+import ruslan.kovshar.final_project.view.URIs;
 
 import javax.validation.Valid;
 import java.util.Map;
 
 import static ruslan.kovshar.final_project.view.ExceptionsMessages.TRANSACTION_ERROR;
-import static ruslan.kovshar.final_project.view.Pages.MERCHANDISER_PAGE;
-import static ruslan.kovshar.final_project.view.RequestParams.NOT_FOUND;
-import static ruslan.kovshar.final_project.view.RequestParams.PARAM;
-import static ruslan.kovshar.final_project.view.TextConstants.CREATE_PRODUCT_DTO;
-import static ruslan.kovshar.final_project.view.URIs.*;
 
+/**
+ * controls all merchandiser functions
+ */
 @Controller
-@RequestMapping(MERCHANDISER)
+@RequestMapping(URIs.MERCHANDISER)
 public class MerchandiserController {
 
     private static final Logger log = Logger.getLogger(MerchandiserController.class);
@@ -43,13 +45,27 @@ public class MerchandiserController {
         this.stockService = stockService;
     }
 
+    /**
+     * displays the merchandiser page
+     *
+     * @param notFound arises if the product was not found
+     * @param model    model
+     * @return page template
+     */
     @GetMapping
-    public String getMerchandiserPage(@RequestParam(name = NOT_FOUND, required = false) String notFound,
-                                      Model model) {
-        model.addAttribute(NOT_FOUND, notFound != null);
-        return MERCHANDISER_PAGE;
+    public String merchandiserPage(@RequestParam(name = Params.NOT_FOUND, required = false) String notFound,
+                                   Model model) {
+        model.addAttribute(Params.NOT_FOUND, notFound != null);
+        return Pages.MERCHANDISER_PAGE;
     }
 
+
+    /**
+     * @param createProductDTO product info
+     * @param bindingResult    binding result
+     * @param model            model
+     * @return redirect to merchandiser page if product created, if not - merchandiser page
+     */
     @PostMapping
     public String createProduct(@Valid CreateProductDTO createProductDTO,
                                 BindingResult bindingResult,
@@ -57,8 +73,8 @@ public class MerchandiserController {
         if (bindingResult.hasErrors()) {
             Map<String, String> errorsMap = ControllerUtils.getErrors(bindingResult);
             model.mergeAttributes(errorsMap);
-            model.addAttribute(CREATE_PRODUCT_DTO, createProductDTO);
-            return MERCHANDISER_PAGE;
+            model.addAttribute(TextConstants.CREATE_PRODUCT_DTO, createProductDTO);
+            return Pages.MERCHANDISER_PAGE;
         }
 
         Product product;
@@ -81,10 +97,17 @@ public class MerchandiserController {
         stock.setProduct(product);
         stock.setCountOfProduct(createProductDTO.getCount());
         stockService.create(stock);
-        return REDIRECT + MERCHANDISER;
+        return URIs.REDIRECT + URIs.MERCHANDISER;
     }
 
-    @PostMapping(STOCK)
+    /**
+     * adds products to the stock
+     *
+     * @param name           name of product(also can be a code of product)
+     * @param countOfProduct count of product
+     * @return redirect to merchandiser page
+     */
+    @PostMapping(URIs.STOCK)
     public String addCount(String name, Integer countOfProduct) {
         Integer code = null;
         try {
@@ -95,13 +118,13 @@ public class MerchandiserController {
         try {
             Product product = productService.loadByCodeOrName(code, name);
             stockService.update(product, countOfProduct);
-            return REDIRECT + MERCHANDISER;
+            return URIs.REDIRECT + URIs.MERCHANDISER;
         } catch (ProductNotFoundException e) {
             log.error(e.getMessage());
-            return REDIRECT + MERCHANDISER + PARAM + NOT_FOUND;
+            return URIs.REDIRECT + URIs.MERCHANDISER + Params.PARAM + Params.NOT_FOUND;
         } catch (TransactionException e) {
             log.error(TRANSACTION_ERROR);
-            return REDIRECT + MERCHANDISER;
+            return URIs.REDIRECT + URIs.MERCHANDISER;
         }
     }
 }

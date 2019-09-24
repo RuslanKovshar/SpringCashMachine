@@ -7,24 +7,19 @@ import lombok.Setter;
 
 import javax.persistence.*;
 
-import static ruslan.kovshar.final_project.view.TablesConstants.*;
-
-@Entity
-@Setter
 @Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = TABLE_STOCK_NAME)
-public class Stock {
+@Entity
+@Table(name = "buyer_info")
+public class Buyer {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = STOCK_ROW_ID)
     private Long id;
 
-    @OneToOne
-    private Product product;
+    private String nameOnCard;
 
-    @Column(name = COUNT_OF_PRODUCTS)
-    private Integer countOfProduct;
+    private String cardNumber;
 }

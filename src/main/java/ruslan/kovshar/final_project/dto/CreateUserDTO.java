@@ -12,22 +12,22 @@ import javax.validation.constraints.Pattern;
 @Setter
 public class CreateUserDTO {
 
-    @Pattern(regexp = "^([a-z0-9_.-]+)@([a-z0-9_-]+).([a-z]{2,6})$",message = "{input.email}")
+    @Pattern(regexp = "^([a-z0-9_.-]+)@([a-z0-9_-]+).([a-z]{2,6})$", message = "{input.email.message}")
     private String email;
 
-    @NotBlank
+    @Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[.-_])(?=\\S+$).{8,}$" , message = "{input.password.message}")
     private String password;
 
-    @NotBlank
+    @NotBlank(message = "{input.firstNameUA.message}")
     private String firstNameUA;
 
-    @NotBlank
+    @NotBlank(message = "{input.secondNameUA.message}")
     private String secondNameUA;
 
-    @NotBlank
+    @NotBlank(message = "{input.firstNameEN.message}")
     private String firstNameEN;
 
-    @NotBlank
+    @NotBlank(message = "{input.secondNameEN.message}")
     private String secondNameEN;
 
 }

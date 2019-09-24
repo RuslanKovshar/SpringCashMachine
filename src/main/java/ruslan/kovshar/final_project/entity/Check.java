@@ -22,11 +22,12 @@ import static ruslan.kovshar.final_project.view.TablesConstants.*;
 public class Check {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @OneToMany(cascade = CascadeType.ALL,
-            fetch = FetchType.EAGER)
+            fetch = FetchType.EAGER,
+            mappedBy = "check")
     private Set<ProductInCheck> products = new HashSet<>();
 
     @JsonIgnore
@@ -36,4 +37,12 @@ public class Check {
 
     @Column(name = CHECK_TOTAL_PRICE)
     private BigDecimal totalPrice = BigDecimal.ZERO;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    private Buyer buyer;
+
+    public void calculateTotalPrice() {
+        double sum = products.stream().mapToDouble(products -> products.getPrice().doubleValue()).sum();
+        this.totalPrice = BigDecimal.valueOf(sum);
+    }
 }

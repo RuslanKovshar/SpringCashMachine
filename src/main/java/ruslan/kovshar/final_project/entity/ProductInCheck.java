@@ -1,5 +1,6 @@
 package ruslan.kovshar.final_project.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -20,12 +21,12 @@ public class ProductInCheck {
     @OneToOne
     private Product product;
 
-    private Number value;
+    private Integer countOfProduct;
 
     private BigDecimal price;
 
-    /*@JsonIgnore
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "check_id")
-    private Check check;*/
+    private Check check;
 }

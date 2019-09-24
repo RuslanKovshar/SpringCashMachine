@@ -23,9 +23,12 @@
         </tbody>
     </table>
 
+    <#if isCashier>
     <form action="/open_check">
         <button class="btn btn-lg btn-success btn-block mt-2"><@spring.message "open.check.message"/></button>
     </form>
+    </#if>
+
     <#if isMerchandiser>
         <form action="/merchandiser">
             <button class="btn btn-lg btn-success btn-block mt-2"><@spring.message "merchandiser.menu.message"/></button>
@@ -33,6 +36,13 @@
     </#if>
 
     <#if isSeniorCashier>
+
+        <form action="/senior_cashier/all_checks">
+            <button type="submit" class="btn btn-success btn-lg btn-block mt-2">
+                <@spring.message "all.checks.message"/>
+            </button>
+        </form>
+
         <form action="/senior_cashier/x-report">
             <button type="submit" class="btn btn-success btn-lg btn-block mt-2">
                 <@spring.message "x-report.message"/>

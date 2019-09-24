@@ -1,5 +1,6 @@
 <#import "parts/common.ftl" as c>
 <#import "/spring.ftl" as spring/>
+<#include "parts/security.ftl">
 <@c.common>
 
     <form action="/check/product" method="post" class="form-group">
@@ -31,12 +32,24 @@
             <tbody>
             <#list check.products as product>
                 <tr>
-                    <td>${product.product.internationalName(.locale)}</td>
+
                     <td>
-                        <#if product.product.class.name == 'ruslan.kovshar.final_project.entity.CountProduct'>
-                            X${product.value}
+                        ${product.product.internationalName(.locale)}
+                        <#if isSeniorCashier>
+                            <form action="/senior_cashier/check/remove_product" method="post">
+                                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
+                                <input type="hidden" value="${product.product.nameUA}" name="name">
+                                <button type="submit" class="btn btn-small btn-danger">
+                                    Remove
+                                </button>
+                            </form>
+                        </#if>
+                    </td>
+                    <td>
+                        <#if product.product.type == "PIECE_PRODUCT">
+                            X${product.countOfProduct}
                         <#else>
-                            ${product.value} <@spring.message "gram.message"/>
+                            ${product.countOfProduct} <@spring.message "gram.message"/>
                         </#if>
                     </td>
                     <td>${product.price}</td>

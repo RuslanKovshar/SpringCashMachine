@@ -5,32 +5,32 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 import ruslan.kovshar.final_project.dto.GetProductDTO;
-import ruslan.kovshar.final_project.entity.Check;
-import ruslan.kovshar.final_project.entity.Product;
-import ruslan.kovshar.final_project.entity.ProductInCheck;
-import ruslan.kovshar.final_project.entity.User;
+import ruslan.kovshar.final_project.entity.*;
 import ruslan.kovshar.final_project.exceptions.ProductNotFoundException;
 import ruslan.kovshar.final_project.exceptions.TransactionException;
 import ruslan.kovshar.final_project.service.CheckService;
+import ruslan.kovshar.final_project.service.PaymentService;
 import ruslan.kovshar.final_project.service.ProductService;
 import ruslan.kovshar.final_project.service.StockService;
+import ruslan.kovshar.final_project.view.Pages;
+import ruslan.kovshar.final_project.view.Params;
+import ruslan.kovshar.final_project.view.TextConstants;
+import ruslan.kovshar.final_project.view.URIs;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.math.BigDecimal;
 import java.util.Optional;
 
 import static ruslan.kovshar.final_project.view.ExceptionsMessages.TRANSACTION_ERROR;
-import static ruslan.kovshar.final_project.view.Pages.CHECK_PAGE;
-import static ruslan.kovshar.final_project.view.Pages.PRODUCT_PAGE;
-import static ruslan.kovshar.final_project.view.RequestParams.*;
-import static ruslan.kovshar.final_project.view.TextConstants.CHECK_PARAM;
-import static ruslan.kovshar.final_project.view.TextConstants.PRODUCT_PARAM;
-import static ruslan.kovshar.final_project.view.URIs.*;
 
+/**
+ * Class that controls all checks and products operations
+ */
 @Controller
 public class ProductsController {
 
@@ -39,38 +39,66 @@ public class ProductsController {
     private final ProductService productService;
     private final CheckService checkService;
     private final StockService stockService;
-    private Check check;
+    private final PaymentService paymentService;
 
-    public ProductsController(ProductService productService, CheckService checkService, StockService stockService) {
+    public ProductsController(ProductService productService, CheckService checkService, StockService stockService, PaymentService paymentService) {
         this.productService = productService;
         this.checkService = checkService;
         this.stockService = stockService;
+        this.paymentService = paymentService;
     }
 
-    @GetMapping(CHECK)
-    public String getCheckPage(@RequestParam(name = NOT_FOUND, required = false) String notFound,
-                               Model model) {
+    /**
+     * displays check page
+     *
+     * @param notFound arises if the product was not found
+     * @param model    model
+     * @param session  http session
+     * @return page template
+     */
+    @GetMapping(URIs.CHECK)
+    public String checkPage(@RequestParam(name = Params.NOT_FOUND, required = false) String notFound,
+                            Model model,
+                            HttpSession session) {
+        Check check = (Check) session.getAttribute(Params.CHECK);
         if (check != null) {
-            model.addAttribute(CHECK_PARAM, check);
+            model.addAttribute(TextConstants.CHECK_PARAM, check);
         }
-        model.addAttribute(NOT_FOUND, notFound != null);
-        return CHECK_PAGE;
+        model.addAttribute(Params.NOT_FOUND, notFound != null);
+        return Pages.CHECK_PAGE;
     }
 
-    @GetMapping(CHECK + PRODUCT + ID)
-    public String getProductPage(@PathVariable(name = ID_PARAM, required = false) Product product,
-                                 @RequestParam(name = ERROR, required = false) String error,
-                                 Model model,
-                                 SessionLocaleResolver resolver,
-                                 HttpServletRequest req) {
-
-        model.addAttribute(PRODUCT_PARAM, new GetProductDTO(product, resolver, req));
-        model.addAttribute(ERROR, error != null);
-        return PRODUCT_PAGE;
+    /**
+     * displays product page
+     *
+     * @param error    arises if count of the product is not enough
+     * @param model    model
+     * @param resolver session locale resolver
+     * @param req      http servlet request
+     * @param session  http session
+     * @return page template
+     */
+    @GetMapping(URIs.CHECK + URIs.PRODUCT)
+    public String productPage(@RequestParam(name = Params.ERROR, required = false) String error,
+                              Model model,
+                              SessionLocaleResolver resolver,
+                              HttpServletRequest req,
+                              HttpSession session) {
+        Product product = (Product) session.getAttribute(Params.PRODUCT);
+        model.addAttribute(TextConstants.PRODUCT_PARAM, new GetProductDTO(product, resolver, req));
+        model.addAttribute(Params.ERROR, error != null);
+        return Pages.PRODUCT_PAGE;
     }
 
-    @PostMapping(CHECK + PRODUCT)
-    public String findProduct(String name) {
+    /**
+     * finds product by name or code
+     *
+     * @param name    name of product(also can be a code of product)
+     * @param session session
+     * @return product page if product exists, and check page with notFound param if not
+     */
+    @PostMapping(URIs.CHECK + URIs.PRODUCT)
+    public String findProduct(String name, HttpSession session) {
         Integer code = null;
         try {
             code = Integer.parseInt(name);
@@ -79,59 +107,112 @@ public class ProductsController {
 
         try {
             Product product = productService.loadByCodeOrName(code, name);
-            return REDIRECT + CHECK + PRODUCT + SLASH + product.getId();
+            session.setAttribute(Params.PRODUCT, product);
+            return URIs.REDIRECT + URIs.CHECK + URIs.PRODUCT;
         } catch (ProductNotFoundException e) {
             log.error(e.getMessage());
-            return REDIRECT + CHECK + PARAM + NOT_FOUND;
+            return URIs.REDIRECT + URIs.CHECK + Params.PARAM + Params.NOT_FOUND;
         }
     }
 
-    @GetMapping(OPEN_CHECK)
-    public String openCheck() {
-        if (check == null) {
-            check = new Check();
+    /**
+     * opens the check if it does not open
+     *
+     * @param session http session
+     * @return redirect to check page
+     */
+    @GetMapping(URIs.OPEN_CHECK)
+    public String openCheck(HttpSession session) {
+        if (session.getAttribute(Params.CHECK) == null) {
+            session.setAttribute(Params.CHECK, new Check());
         }
-        return REDIRECT + CHECK;
+        return URIs.REDIRECT + URIs.CHECK;
     }
 
-    @PostMapping(CLOSE_CHECK)
-    public String closeCheck(@AuthenticationPrincipal User user) {
+    /**
+     * gets check total price and redirect to payment
+     *
+     * @param session http session
+     * @return redirect to payment page
+     */
+    @PostMapping(URIs.CLOSE_CHECK)
+    public String closeCheck(HttpSession session) {
+        Check check = (Check) session.getAttribute(Params.CHECK);
+        return URIs.REDIRECT + URIs.PAYMENT + Params.PARAM + Params.VALUE + "=" + check.getTotalPrice();
+    }
+
+    /**
+     * makes payment from buyer to user
+     *
+     * @param user    user
+     * @param buyer   buyer info
+     * @param value   price that buyer has to pay
+     * @param session http session
+     * @return redirect to home page
+     */
+    @PostMapping(URIs.PAYMENT)
+    public String makePayment(@AuthenticationPrincipal User user, Buyer buyer, BigDecimal value, HttpSession session) {
+        Check check = (Check) session.getAttribute(Params.CHECK);
+        user.setCash(user.getCash().add(value));
+        paymentService.makePay(user, buyer);
         check.setUser(user);
+        check.setBuyer(buyer);
         user.getChecks().add(check);
         checkService.saveCheck(check);
-        check = null;
-        return REDIRECT + HOME;
+        session.removeAttribute(Params.CHECK);
+        return URIs.REDIRECT + Params.SLASH;
     }
 
-    @PostMapping(PRODUCT + ADD + ID)
-    public String addProductToCheck(@PathVariable(name = ID_PARAM) Product product,
-                                    Number number) {
+    /**
+     * displays payment page
+     *
+     * @param value price that buyer has to pay
+     * @param model model
+     * @return page template
+     */
+    @GetMapping(URIs.PAYMENT)
+    public String paymentPage(@RequestParam(name = Params.VALUE) BigDecimal value, Model model) {
+        model.addAttribute(Params.VALUE, value);
+        return Pages.PAYMENT_PAGE;
+    }
+
+
+    /**
+     * adds product to check.
+     * if product already in check add count of the product
+     *
+     * @param countOfProduct count of product
+     * @param session        http session
+     * @return redirect to check page if enough product in stock,
+     * redirect to product page with error
+     */
+    @PostMapping(URIs.PRODUCT + URIs.ADD)
+    public String addProductToCheck(Integer countOfProduct, HttpSession session) {
+        Product product = (Product) session.getAttribute(Params.PRODUCT);
         try {
-            stockService.update(product, -number.intValue());
+            stockService.update(product, -countOfProduct);
         } catch (TransactionException e) {
             log.error(TRANSACTION_ERROR);
-            return REDIRECT + CHECK + PRODUCT + SLASH + product.getId() + PARAM + ERROR;
+            return URIs.REDIRECT + URIs.CHECK + URIs.PRODUCT + Params.PARAM + Params.ERROR;
         }
 
+        Check check = (Check) session.getAttribute(Params.CHECK);
         Optional<ProductInCheck> productInCheck = check.getProducts().stream().filter(s -> s.getProduct().equals(product)).findAny();
 
         if (productInCheck.isPresent()) {
-            ProductInCheck check = productInCheck.get();
-            check.setValue(check.getValue().doubleValue() + number.doubleValue());
-            check.setPrice(check.getPrice().add(product.calculatePrice(number)));
+            ProductInCheck inCheck = productInCheck.get();
+            inCheck.setCountOfProduct(inCheck.getCountOfProduct() + countOfProduct);
+            inCheck.setPrice(inCheck.getPrice().add(product.calculatePrice(countOfProduct)));
         } else {
             ProductInCheck newProduct = new ProductInCheck();
             newProduct.setProduct(product);
-            if (product.getClass().equals(ruslan.kovshar.final_project.entity.CountProduct.class)) {
-                newProduct.setValue(number.intValue());
-            } else {
-                newProduct.setValue(number.doubleValue());
-            }
-            newProduct.setPrice(product.calculatePrice(number));
+            newProduct.setCountOfProduct(countOfProduct);
+            newProduct.setPrice(product.calculatePrice(countOfProduct));
+            newProduct.setCheck(check);
             check.getProducts().add(newProduct);
         }
-
-        check.setTotalPrice(check.getTotalPrice().add(product.calculatePrice(number)));
-        return REDIRECT + CHECK;
+        check.calculateTotalPrice();
+        session.removeAttribute(Params.PRODUCT);
+        return URIs.REDIRECT + URIs.CHECK;
     }
 }

@@ -19,4 +19,8 @@ public interface URIs {
     String API = "/api";
     String CASHIER = "/cashier";
     String REDIRECT = "redirect:";
+    String CHECKS = "/all_checks";
+    String CANCEL_CHECK = "/cancel_check";
+    String REMOVE_PRODUCT = "/remove_product";
+    String PAYMENT = "/payment";
 }

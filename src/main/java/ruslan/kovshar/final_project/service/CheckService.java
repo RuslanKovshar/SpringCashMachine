@@ -34,4 +34,12 @@ public class CheckService {
         checkRepository.deleteAll(checks);
     }
 
+    public Check findCheckById(Long id) {
+        //TODO изменить ексептион
+        return checkRepository.findById(id).orElseThrow(RuntimeException::new);
+    }
+
+    public void deleteCheck(Check check) {
+        checkRepository.delete(check);
+    }
 }

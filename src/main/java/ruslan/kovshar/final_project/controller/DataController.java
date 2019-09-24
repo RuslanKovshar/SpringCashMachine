@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import static ruslan.kovshar.final_project.view.RequestParams.ID_PARAM;
+import static ruslan.kovshar.final_project.view.Params.ID_PARAM;
 import static ruslan.kovshar.final_project.view.URIs.*;
 
 @RestController

@@ -1,6 +1,13 @@
 <#import "parts/common.ftl" as c>
 <#import "/spring.ftl" as spring/>
 <@c.common>
+
+    <#if exist!false>
+        <div class="alert alert-danger" role="alert">
+            <@spring.message "user.with.email.message"/><i>${createUserDTO.email}</i> <@spring.message "exist.message"/>
+        </div>
+    </#if>
+
     <form class="form-signin" action="/registration" method="post">
         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
         <#if success!false>

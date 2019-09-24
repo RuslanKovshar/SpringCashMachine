@@ -6,6 +6,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import ruslan.kovshar.final_project.enums.Roles;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.Set;
 
@@ -21,7 +22,7 @@ import static ruslan.kovshar.final_project.view.TablesConstants.*;
 public class User implements UserDetails {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = USER_ID, nullable = false)
     private Long id;
 
@@ -47,6 +48,9 @@ public class User implements UserDetails {
     @CollectionTable(name = USER_ROLES, joinColumns = @JoinColumn(name = CHECK_USER_ID))
     @Enumerated(EnumType.STRING)
     private Set<Roles> authorities;
+
+    @Column(name = "cash")
+    private BigDecimal cash;
 
     @OneToMany(cascade = CascadeType.ALL,
             fetch = FetchType.EAGER,
@@ -91,6 +95,10 @@ public class User implements UserDetails {
     @Override
     public boolean isEnabled() {
         return isEnabled;
+    }
+
+    public boolean isCashier() {
+        return authorities.contains(Roles.CASHIER);
     }
 
     public boolean isMerchandiser() {

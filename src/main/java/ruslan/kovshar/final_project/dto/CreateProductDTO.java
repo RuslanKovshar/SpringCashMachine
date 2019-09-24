@@ -12,22 +12,22 @@ import java.math.BigDecimal;
 @Getter
 public class CreateProductDTO {
 
-    @NotBlank
+    @NotBlank(message = "{input.nameUA.message}")
     private String nameUA;
 
-    @NotBlank
+    @NotBlank(message = "{input.nameEN.message}")
     private String nameEN;
 
-    @NotNull
+    @NotNull(message = "{input.code.message}")
     private Integer code;
 
-    @NotNull
+    @NotNull(message = "{input.price.message}")
     private BigDecimal price;
+
+    @NotNull(message = "{input.count.of.product.message}")
+    private Integer count;
 
     @NotNull
     private Types type;
-
-    @NotNull
-    private Integer count;
 
 }

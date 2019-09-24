@@ -4,7 +4,7 @@
 <#import "/spring.ftl" as spring/>
 <@c.common>
 
-    <@report.report alert="warning" type="z-report.message"/>
+    <#--<@report.report alert="warning" type="z-report.message"/>-->
 
     <div class="collapse" id="collapseExample">
 

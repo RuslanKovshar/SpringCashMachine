@@ -15,12 +15,14 @@ import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 import ruslan.kovshar.final_project.enums.Roles;
 import ruslan.kovshar.final_project.service.UserService;
+import ruslan.kovshar.final_project.view.TextConstants;
+import ruslan.kovshar.final_project.view.URIs;
 
 import java.util.Locale;
 
-import static ruslan.kovshar.final_project.view.TextConstants.LANG_PARAM_NAME;
-import static ruslan.kovshar.final_project.view.URIs.*;
-
+/**
+ * configures web security
+ */
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
@@ -45,15 +47,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements W
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                    .antMatchers(MERCHANDISER).hasAuthority(Roles.MERCHANDISER.name())
-                    .antMatchers(LOGIN).permitAll()
-                    .antMatchers(REGISTRATION).permitAll()
+                    .antMatchers(URIs.MERCHANDISER).hasAuthority(Roles.MERCHANDISER.name())
+                    .antMatchers(URIs.LOGIN).permitAll()
+                    .antMatchers(URIs.REGISTRATION).permitAll()
                     .anyRequest().authenticated()
                 .and()
                     .rememberMe()
                     .tokenValiditySeconds(86400)
                 .and()
-                    .formLogin().loginPage(LOGIN).permitAll()
+                    .formLogin().loginPage(URIs.LOGIN).permitAll()
                 .and()
                     .logout().permitAll()
                 .and();
@@ -69,12 +71,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements W
     @Bean
     public LocaleChangeInterceptor localeChangeInterceptor() {
         LocaleChangeInterceptor lci = new LocaleChangeInterceptor();
-        lci.setParamName(LANG_PARAM_NAME);
+        lci.setParamName(TextConstants.LANG_PARAM_NAME);
         return lci;
     }
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(localeChangeInterceptor()).addPathPatterns(ANY_PATH);
+        registry.addInterceptor(localeChangeInterceptor()).addPathPatterns(URIs.ANY_PATH);
     }
 }
