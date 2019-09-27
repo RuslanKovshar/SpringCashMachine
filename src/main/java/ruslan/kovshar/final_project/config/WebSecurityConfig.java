@@ -47,17 +47,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements W
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                    .antMatchers(URIs.MERCHANDISER).hasAuthority(Roles.MERCHANDISER.name())
-                    .antMatchers(URIs.LOGIN).permitAll()
-                    .antMatchers(URIs.REGISTRATION).permitAll()
-                    .anyRequest().authenticated()
+                .antMatchers(URIs.MERCHANDISER).hasAuthority(Roles.MERCHANDISER.name())
+                .antMatchers(URIs.LOGIN).permitAll()
+                .antMatchers(URIs.REGISTRATION).permitAll()
+                .anyRequest().authenticated()
                 .and()
-                    .rememberMe()
-                    .tokenValiditySeconds(86400)
+                .rememberMe()
+                .tokenValiditySeconds(86400)
                 .and()
-                    .formLogin().loginPage(URIs.LOGIN).permitAll()
+                .formLogin().loginPage(URIs.LOGIN).permitAll()
                 .and()
-                    .logout().permitAll()
+                .logout().permitAll()
                 .and();
     }
 

@@ -7,7 +7,7 @@ import ruslan.kovshar.final_project.entity.Check;
 import ruslan.kovshar.final_project.entity.User;
 import ruslan.kovshar.final_project.repository.CheckRepository;
 
-import java.util.List;
+import java.util.Set;
 
 @Service
 public class CheckService {
@@ -26,17 +26,8 @@ public class CheckService {
         return checkRepository.findAllByUser(user, pageable);
     }
 
-    public List<Check> getAllChecksByUser(User user) {
-        return checkRepository.findAllByUser(user);
-    }
-
-    public void clearChecks(List<Check> checks) {
+    public void clearChecks(Set<Check> checks) {
         checkRepository.deleteAll(checks);
-    }
-
-    public Check findCheckById(Long id) {
-        //TODO изменить ексептион
-        return checkRepository.findById(id).orElseThrow(RuntimeException::new);
     }
 
     public void deleteCheck(Check check) {

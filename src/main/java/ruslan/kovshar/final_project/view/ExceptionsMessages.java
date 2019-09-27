@@ -6,4 +6,5 @@ public interface ExceptionsMessages {
 
     String PRODUCT_NOT_FOUND = "Product not found in database";
     String TRANSACTION_EXCEPTION = "Not enough products in stock";
+    String CHECK_NOT_FOUND = "Check not found";
 }

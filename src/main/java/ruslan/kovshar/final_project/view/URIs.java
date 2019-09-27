@@ -10,7 +10,6 @@ public interface URIs {
     String STOCK = "/stock";
     String CHECK = "/check";
     String PRODUCT = "/product";
-    String ID = "/{id}";
     String OPEN_CHECK = "/open_check";
     String CLOSE_CHECK = "/close_check";
     String ADD = "/add";

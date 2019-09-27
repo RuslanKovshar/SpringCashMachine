@@ -7,10 +7,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 import ruslan.kovshar.final_project.dto.GetProductDTO;
 import ruslan.kovshar.final_project.entity.*;
-import ruslan.kovshar.final_project.exceptions.ProductNotFoundException;
+import ruslan.kovshar.final_project.exceptions.ResourseNotFoundException;
 import ruslan.kovshar.final_project.exceptions.TransactionException;
 import ruslan.kovshar.final_project.service.CheckService;
 import ruslan.kovshar.final_project.service.PaymentService;
@@ -21,7 +20,6 @@ import ruslan.kovshar.final_project.view.Params;
 import ruslan.kovshar.final_project.view.TextConstants;
 import ruslan.kovshar.final_project.view.URIs;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.math.BigDecimal;
 import java.util.Optional;
@@ -71,21 +69,17 @@ public class ProductsController {
     /**
      * displays product page
      *
-     * @param error    arises if count of the product is not enough
-     * @param model    model
-     * @param resolver session locale resolver
-     * @param req      http servlet request
-     * @param session  http session
+     * @param error   arises if count of the product is not enough
+     * @param model   model
+     * @param session http session
      * @return page template
      */
     @GetMapping(URIs.CHECK + URIs.PRODUCT)
     public String productPage(@RequestParam(name = Params.ERROR, required = false) String error,
                               Model model,
-                              SessionLocaleResolver resolver,
-                              HttpServletRequest req,
                               HttpSession session) {
         Product product = (Product) session.getAttribute(Params.PRODUCT);
-        model.addAttribute(TextConstants.PRODUCT_PARAM, new GetProductDTO(product, resolver, req));
+        model.addAttribute(TextConstants.PRODUCT_PARAM, new GetProductDTO(product));
         model.addAttribute(Params.ERROR, error != null);
         return Pages.PRODUCT_PAGE;
     }
@@ -109,7 +103,7 @@ public class ProductsController {
             Product product = productService.loadByCodeOrName(code, name);
             session.setAttribute(Params.PRODUCT, product);
             return URIs.REDIRECT + URIs.CHECK + URIs.PRODUCT;
-        } catch (ProductNotFoundException e) {
+        } catch (ResourseNotFoundException e) {
             log.error(e.getMessage());
             return URIs.REDIRECT + URIs.CHECK + Params.PARAM + Params.NOT_FOUND;
         }
@@ -160,7 +154,7 @@ public class ProductsController {
         user.getChecks().add(check);
         checkService.saveCheck(check);
         session.removeAttribute(Params.CHECK);
-        return URIs.REDIRECT + Params.SLASH;
+        return URIs.REDIRECT + URIs.HOME;
     }
 
     /**

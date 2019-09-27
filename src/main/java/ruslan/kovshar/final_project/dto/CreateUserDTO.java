@@ -15,7 +15,7 @@ public class CreateUserDTO {
     @Pattern(regexp = "^([a-z0-9_.-]+)@([a-z0-9_-]+).([a-z]{2,6})$", message = "{input.email.message}")
     private String email;
 
-    @Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[.-_])(?=\\S+$).{8,}$" , message = "{input.password.message}")
+    @Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[.-_])(?=\\S+$).{8,}$", message = "{input.password.message}")
     private String password;
 
     @NotBlank(message = "{input.firstNameUA.message}")

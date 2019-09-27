@@ -49,7 +49,7 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     private Set<Roles> authorities;
 
-    @Column(name = "cash")
+    @Column(name = CASH)
     private BigDecimal cash;
 
     @OneToMany(cascade = CascadeType.ALL,

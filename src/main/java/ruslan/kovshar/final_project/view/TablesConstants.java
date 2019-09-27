@@ -6,8 +6,7 @@ public interface TablesConstants {
     String CHECK_TOTAL_PRICE = "total_price";
 
     String TABLE_PRODUCTS_NAME = "products";
-    String PRODUCT_NAME_UA = "name_UA";
-    String PRODUCT_NAME_EN = "name_EN";
+    String PRODUCT_NAME = "name";
 
     String TABLE_STOCK_NAME = "stock";
     String STOCK_ROW_ID = "row_id";
@@ -23,4 +22,10 @@ public interface TablesConstants {
     String SECOND_NAME_EN = "second_name_EN";
     String USER_ROLES = "user_roles";
     String USER_MAPPING = "user";
+
+    String BUYER_INFO = "buyer_info";
+    String CODE = "code";
+    String CHECK = "check";
+    String CHECK_ID = "check_id";
+    String CASH = "cash";
 }

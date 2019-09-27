@@ -24,9 +24,9 @@
     </table>
 
     <#if isCashier>
-    <form action="/open_check">
-        <button class="btn btn-lg btn-success btn-block mt-2"><@spring.message "open.check.message"/></button>
-    </form>
+        <form action="/open_check">
+            <button class="btn btn-lg btn-success btn-block mt-2"><@spring.message "open.check.message"/></button>
+        </form>
     </#if>
 
     <#if isMerchandiser>

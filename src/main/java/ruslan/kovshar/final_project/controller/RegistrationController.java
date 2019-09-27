@@ -60,7 +60,7 @@ public class RegistrationController {
             model.addAttribute(TextConstants.USER_DTO, createUserDTO);
             return Pages.REGISTRATION_PAGE;
         } else {
-            if (userService.saveNewUser(createUserDTO)) {
+            if (userService.saveNewUser(userService.createUser(createUserDTO))) {
                 return URIs.REDIRECT + URIs.REGISTRATION + Params.PARAM + Params.SUCCESS;
             } else {
                 model.addAttribute(TextConstants.USER_DTO, createUserDTO);

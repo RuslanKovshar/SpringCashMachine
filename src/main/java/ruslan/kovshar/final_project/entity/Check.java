@@ -27,7 +27,7 @@ public class Check {
 
     @OneToMany(cascade = CascadeType.ALL,
             fetch = FetchType.EAGER,
-            mappedBy = "check")
+            mappedBy = CHECK)
     private Set<ProductInCheck> products = new HashSet<>();
 
     @JsonIgnore

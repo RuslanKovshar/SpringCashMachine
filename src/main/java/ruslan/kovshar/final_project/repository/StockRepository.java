@@ -6,6 +6,6 @@ import ruslan.kovshar.final_project.entity.Stock;
 
 import java.util.Optional;
 
-public interface StockRepository extends JpaRepository<Stock,Long> {
+public interface StockRepository extends JpaRepository<Stock, Long> {
     Optional<Stock> findByProduct(Product product);
 }

@@ -1,11 +1,13 @@
 <#macro pagination>
-<nav aria-label="Page navigation example">
-    <ul class="pagination">
-        <div ng-repeat="p in [].constructor(page.totalPages) track by $index">
-            <li class="page-item">
-                <button class="page-link" ng-click="init(${id},$index)">{{$index + 1}}</button>
-            </li>
-        </div>
-    </ul>
-</nav>
+    <#if page.totalPages gt 0 >
+        <nav aria-label="Page navigation example">
+            <ul class="pagination">
+                <#list 1..page.totalPages as pageNumber>
+                    <li class="page-item">
+                        <a class="page-link" href="?page=${pageNumber - 1}">${pageNumber}</a>
+                    </li>
+                </#list>
+            </ul>
+        </nav>
+    </#if>
 </#macro>

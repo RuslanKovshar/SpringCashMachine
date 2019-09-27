@@ -1,8 +1,10 @@
 package ruslan.kovshar.final_project.service;
 
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
+import ruslan.kovshar.final_project.controller.MerchandiserController;
 import ruslan.kovshar.final_project.entity.Product;
-import ruslan.kovshar.final_project.exceptions.ProductNotFoundException;
+import ruslan.kovshar.final_project.exceptions.ResourseNotFoundException;
 import ruslan.kovshar.final_project.repository.ProductRepository;
 
 import static ruslan.kovshar.final_project.view.ExceptionsMessages.PRODUCT_NOT_FOUND;
@@ -10,18 +12,26 @@ import static ruslan.kovshar.final_project.view.ExceptionsMessages.PRODUCT_NOT_F
 @Service
 public class ProductService {
 
+    private static final Logger log = Logger.getLogger(ProductService.class);
+
     private final ProductRepository productRepository;
 
     public ProductService(ProductRepository productRepository) {
         this.productRepository = productRepository;
     }
 
-    public void create(Product product) {
-        productRepository.save(product);
+    public boolean create(Product product) {
+        try {
+            productRepository.save(product);
+            return true;
+        }catch (Exception e) {
+            log.error(e);
+        }
+        return false;
     }
 
     public Product loadByCodeOrName(Integer code, String name) {
-        return productRepository.findByCodeOrNameUAOrNameEN(code,name,name)
-                .orElseThrow(()-> new ProductNotFoundException(PRODUCT_NOT_FOUND));
+        return productRepository.findByCodeOrName(code, name)
+                .orElseThrow(() -> new ResourseNotFoundException(PRODUCT_NOT_FOUND));
     }
 }

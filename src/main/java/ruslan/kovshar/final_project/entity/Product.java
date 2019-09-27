@@ -15,7 +15,9 @@ import static ruslan.kovshar.final_project.view.TablesConstants.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-@Table(name = TABLE_PRODUCTS_NAME)
+@Table(name = TABLE_PRODUCTS_NAME, uniqueConstraints =
+        {@UniqueConstraint(columnNames = {CODE}),
+                @UniqueConstraint(columnNames = {PRODUCT_NAME})})
 public abstract class Product {
 
     @Id
@@ -23,14 +25,11 @@ public abstract class Product {
     @Column(nullable = false)
     protected Long id;
 
-    @Column(nullable = false)
+    @Column(name = CODE, nullable = false)
     protected Integer code;
 
-    @Column(name = PRODUCT_NAME_UA, nullable = false)
-    protected String nameUA;
-
-    @Column(name = PRODUCT_NAME_EN, nullable = false)
-    protected String nameEN;
+    @Column(name = PRODUCT_NAME, nullable = false)
+    protected String name;
 
     @Column(nullable = false)
     protected BigDecimal price;
@@ -40,10 +39,9 @@ public abstract class Product {
 
     public abstract BigDecimal calculatePrice(Number value);
 
-    public Product(Integer code, String nameUA, String nameEN, BigDecimal price,Types type) {
+    public Product(Integer code, String name, BigDecimal price, Types type) {
         this.code = code;
-        this.nameUA = nameUA;
-        this.nameEN = nameEN;
+        this.name = name;
         this.price = price;
         this.type = type;
     }
@@ -53,21 +51,15 @@ public abstract class Product {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Product product = (Product) o;
-        return Objects.equals(id, product.id) &&
-                Objects.equals(code, product.code) &&
-                Objects.equals(nameUA, product.nameUA) &&
-                Objects.equals(price, product.price);
+        return id.equals(product.id) &&
+                code.equals(product.code) &&
+                name.equals(product.name) &&
+                price.equals(product.price) &&
+                type == product.type;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, code, nameUA, price);
-    }
-
-    public String internationalName(String lang) {
-        if (lang.equals("en")) {
-            return nameEN;
-        }
-        return nameUA;
+        return Objects.hash(id, code, name, price, type);
     }
 }

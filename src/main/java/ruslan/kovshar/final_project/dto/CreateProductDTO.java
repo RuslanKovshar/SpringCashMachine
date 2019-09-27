@@ -12,11 +12,8 @@ import java.math.BigDecimal;
 @Getter
 public class CreateProductDTO {
 
-    @NotBlank(message = "{input.nameUA.message}")
-    private String nameUA;
-
-    @NotBlank(message = "{input.nameEN.message}")
-    private String nameEN;
+    @NotBlank(message = "{input.name.message}")
+    private String name;
 
     @NotNull(message = "{input.code.message}")
     private Integer code;

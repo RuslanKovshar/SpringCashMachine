@@ -6,6 +6,8 @@ import lombok.*;
 import javax.persistence.*;
 import java.math.BigDecimal;
 
+import static ruslan.kovshar.final_project.view.TablesConstants.CHECK_ID;
+
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
@@ -27,6 +29,6 @@ public class ProductInCheck {
 
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "check_id")
+    @JoinColumn(name = CHECK_ID)
     private Check check;
 }

@@ -1,6 +1,9 @@
 package ruslan.kovshar.final_project.controller;
 
 import org.apache.log4j.Logger;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,16 +14,21 @@ import org.springframework.web.bind.annotation.RequestParam;
 import ruslan.kovshar.final_project.entity.Check;
 import ruslan.kovshar.final_project.entity.ProductInCheck;
 import ruslan.kovshar.final_project.entity.User;
+import ruslan.kovshar.final_project.exceptions.ResourseNotFoundException;
 import ruslan.kovshar.final_project.exceptions.TransactionException;
 import ruslan.kovshar.final_project.service.CheckService;
 import ruslan.kovshar.final_project.service.PaymentService;
+import ruslan.kovshar.final_project.service.ReportService;
 import ruslan.kovshar.final_project.service.StockService;
+import ruslan.kovshar.final_project.view.ExceptionsMessages;
 import ruslan.kovshar.final_project.view.Pages;
 import ruslan.kovshar.final_project.view.Params;
 import ruslan.kovshar.final_project.view.URIs;
 
 import javax.servlet.http.HttpSession;
+import java.util.Collections;
 import java.util.Optional;
+import java.util.Set;
 
 /**
  * controls all senior cashier functions
@@ -34,11 +42,13 @@ public class SeniorCashierController {
     private final CheckService checkService;
     private final StockService stockService;
     private final PaymentService paymentService;
+    private final ReportService reportService;
 
-    public SeniorCashierController(CheckService checkService, StockService stockService, PaymentService paymentService) {
+    public SeniorCashierController(CheckService checkService, StockService stockService, PaymentService paymentService, ReportService reportService) {
         this.checkService = checkService;
         this.stockService = stockService;
         this.paymentService = paymentService;
+        this.reportService = reportService;
     }
 
     /**
@@ -50,7 +60,10 @@ public class SeniorCashierController {
      */
     @GetMapping(URIs.X_REPORT)
     public String xReportPage(@AuthenticationPrincipal User user, Model model) {
-        makeReport(user, model);
+        Set<Check> checks = user.getChecks();
+        int countOfAllChecks = checks.size();
+        double totalMoney = checks.stream().mapToDouble(s -> s.getTotalPrice().doubleValue()).sum();
+        reportService.makeReport(countOfAllChecks, totalMoney, model);
         return Pages.X_REPORT_PAGE;
     }
 
@@ -63,7 +76,13 @@ public class SeniorCashierController {
      */
     @GetMapping(URIs.Z_REPORT)
     public String zReportPage(@AuthenticationPrincipal User user, Model model) {
-        makeReport(user, model);
+        Set<Check> checks = user.getChecks();
+        int countOfAllChecks = checks.size();
+        double totalMoney = checks.stream().mapToDouble(s -> s.getTotalPrice().doubleValue()).sum();
+        reportService.makeReport(countOfAllChecks, totalMoney, model);
+        reportService.writeZReport(user, countOfAllChecks, totalMoney);
+        user.setChecks(Collections.emptySet());
+        checkService.clearChecks(checks);
         return Pages.Z_REPORT_PAGE;
     }
 
@@ -75,9 +94,13 @@ public class SeniorCashierController {
      * @return page template
      */
     @GetMapping(URIs.CHECKS)
-    public String checksPage(@AuthenticationPrincipal User user, Model model) {
+    public String checksPage(@AuthenticationPrincipal User user,
+                             @RequestParam(name = Params.ERROR, required = false) String error,
+                             @PageableDefault(sort = {Params.ID_PARAM}, direction = Sort.Direction.DESC, size = 12) Pageable pageable,
+                             Model model) {
         model.addAttribute(Params.ID_PARAM, user.getId());
-        model.addAttribute(Params.CHECKS, checkService.getAllChecksByUser(user));
+        model.addAttribute(Params.PAGE, checkService.getAllChecksByUser(user, pageable));
+        model.addAttribute(Params.ERROR, error != null);
         return Pages.CHECKS_PAGE;
     }
 
@@ -90,7 +113,18 @@ public class SeniorCashierController {
      */
     @PostMapping(URIs.CANCEL_CHECK)
     public String cancelCheck(@AuthenticationPrincipal User user, @RequestParam(name = Params.ID_PARAM) Long id) {
-        Check check = user.getChecks().stream().filter(tempCheck -> tempCheck.getId().equals(id)).findAny().orElseThrow(RuntimeException::new);
+        Check check;
+        try {
+            check = user.getChecks()
+                    .stream()
+                    .filter(tempCheck -> tempCheck.getId().equals(id))
+                    .findAny()
+                    .orElseThrow(() -> new ResourseNotFoundException(ExceptionsMessages.CHECK_NOT_FOUND));
+        } catch (ResourseNotFoundException e) {
+            log.error(ExceptionsMessages.CHECK_NOT_FOUND);
+            return URIs.REDIRECT + URIs.CHECKS + Params.PARAM + Params.ERROR;
+        }
+
         check.getProducts().forEach(productInCheck -> {
             try {
                 stockService.update(productInCheck.getProduct(), productInCheck.getCountOfProduct());
@@ -102,7 +136,7 @@ public class SeniorCashierController {
         user.getChecks().remove(check);
         paymentService.returnMoney(user);
         checkService.deleteCheck(check);
-        return URIs.REDIRECT + Params.SLASH;
+        return URIs.REDIRECT + URIs.HOME;
     }
 
     /**
@@ -118,7 +152,7 @@ public class SeniorCashierController {
 
         Optional<ProductInCheck> productInCheck = check.getProducts()
                 .stream()
-                .filter(s -> s.getProduct().getNameUA().equals(name))
+                .filter(s -> s.getProduct().getName().equals(name))
                 .findAny();
 
         if (productInCheck.isPresent()) {
@@ -135,13 +169,5 @@ public class SeniorCashierController {
         }
         check.calculateTotalPrice();
         return URIs.REDIRECT + URIs.CHECK;
-    }
-
-    private void makeReport(User user, Model model) {/*
-        Set<Check> checks = user.getChecks();
-        model.addAttribute(COUNT_OF_CHECKS, checks.size());
-        double sum = checks.stream().mapToDouble(s -> s.getTotalPrice().doubleValue()).sum();
-        model.addAttribute(TOTAL_SUM, sum);
-        model.addAttribute(ENTITY_ID, user.getId());*/
     }
 }

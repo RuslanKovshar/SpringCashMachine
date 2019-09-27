@@ -34,11 +34,11 @@
                 <tr>
 
                     <td>
-                        ${product.product.internationalName(.locale)}
+                        ${product.product.name}
                         <#if isSeniorCashier>
                             <form action="/senior_cashier/check/remove_product" method="post">
                                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
-                                <input type="hidden" value="${product.product.nameUA}" name="name">
+                                <input type="hidden" value="${product.product.name}" name="name">
                                 <button type="submit" class="btn btn-small btn-danger">
                                     Remove
                                 </button>

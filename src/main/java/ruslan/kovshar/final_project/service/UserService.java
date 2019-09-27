@@ -1,5 +1,6 @@
 package ruslan.kovshar.final_project.service;
 
+import org.apache.log4j.Logger;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -15,6 +16,8 @@ import java.util.Collections;
 @Service
 public class UserService implements UserDetailsService {
 
+    private static final Logger log = Logger.getLogger(UserService.class);
+
     private final UserRepository userRepository;
     private final PasswordEncoder encoder;
 
@@ -23,8 +26,8 @@ public class UserService implements UserDetailsService {
         this.encoder = encoder;
     }
 
-    public boolean saveNewUser(CreateUserDTO createUserDTO) {
-        User user = User.builder()
+    public User createUser(CreateUserDTO createUserDTO) {
+        return User.builder()
                 .email(createUserDTO.getEmail())
                 .password(encoder.encode(createUserDTO.getPassword()))
                 .firstNameUA(createUserDTO.getFirstNameUA())
@@ -37,11 +40,15 @@ public class UserService implements UserDetailsService {
                 .isCredentialsNonExpired(true)
                 .isEnabled(true)
                 .build();
+    }
+
+    public boolean saveNewUser(User user) {
+
         try {
             userRepository.save(user);
             return true;
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error(e);
         }
         return false;
     }

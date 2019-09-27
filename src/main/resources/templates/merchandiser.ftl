@@ -11,30 +11,23 @@
     </button>
     <br>
 
+    <#if error!false>
+        <div class="alert alert-danger" role="alert"><@spring.message "product.exist.message"/></div>
+    </#if>
+
     <div class="collapse <#if createProductDTO??>show</#if>" id="collapseExample">
         <form action="/merchandiser" method="post" class="form-group">
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
 
-            <div class="row">
-                <div class="col">
-                    <label for="inputNameUA"><@spring.message "name.message"/>UA</label>
-                    <input id="inputNameUA" type="text" name="nameUA"
-                           class="form-control ${(nameUAError??)?string('is-invalid','')}"
-                           value="<#if createProductDTO??>${createProductDTO.nameUA}</#if>">
-                    <#if nameUAError??>
-                        <div class="invalid-feedback">${nameUAError}</div>
-                    </#if>
-                </div>
-                <div class="col">
-                    <label for="inputNameEN"><@spring.message "name.message"/>EN</label>
-                    <input id="inputNameEN" type="text" name="nameEN"
-                           class="form-control ${(nameENError??)?string('is-invalid','')}"
-                           value="<#if createProductDTO??>${createProductDTO.nameEN}</#if>">
-                    <#if nameENError??>
-                        <div class="invalid-feedback">${nameENError}</div>
-                    </#if>
-                </div>
-            </div>
+
+            <label for="inputNameUA"><@spring.message "name.message"/></label>
+            <input id="inputNameUA" type="text" name="name"
+                   class="form-control ${(nameUAError??)?string('is-invalid','')}"
+                   value="<#if createProductDTO??>${createProductDTO.name}</#if>">
+            <#if nameError??>
+                <div class="invalid-feedback">${nameError}</div>
+            </#if>
+
 
             <label for="inputCode"><@spring.message "code.message"/></label>
             <input id="inputCode" type="text" name="code"

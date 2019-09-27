@@ -5,6 +5,6 @@ import ruslan.kovshar.final_project.entity.Product;
 
 import java.util.Optional;
 
-public interface ProductRepository extends JpaRepository<Product,Long> {
-    Optional<Product> findByCodeOrNameUAOrNameEN(Integer code, String nameUA,String nameEN);
+public interface ProductRepository extends JpaRepository<Product, Long> {
+    Optional<Product> findByCodeOrName(Integer code, String name);
 }
