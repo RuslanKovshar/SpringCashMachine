@@ -32,22 +32,26 @@
                             <div class="row ">
                                 <div class="col-md-12">
                                     <input type="text" class="form-control" placeholder="Enter Card Number"
-                                           name="cardNumber">
+                                           name="cardNumber"
+                                           pattern="([0-9]{16})"
+                                           title="XXXXXXXXXXXXXXXX"
+                                           required
+                                           autofocus>
                                 </div>
                             </div>
 
                             <div class="row ">
                                 <div class="col-md-3 col-sm-3 col-xs-3">
                                     <span class="help-block text-muted small-font"> Expiry Month</span>
-                                    <input type="text" class="form-control" placeholder="MM"/>
+                                    <input type="text" class="form-control" placeholder="MM" required/>
                                 </div>
                                 <div class="col-md-3 col-sm-3 col-xs-3">
                                     <span class="help-block text-muted small-font"> Expiry Year</span>
-                                    <input type="text" class="form-control" placeholder="YY"/>
+                                    <input type="text" class="form-control" placeholder="YY" required/>
                                 </div>
                                 <div class="col-md-3 col-sm-3 col-xs-3">
                                     <span class="help-block text-muted small-font"> CCV</span>
-                                    <input type="text" class="form-control" placeholder="CCV"/>
+                                    <input type="text" class="form-control" placeholder="CCV" required/>
                                 </div>
                                 <div class="col-md-3 col-sm-3 col-xs-3">
                                     <img src="http://bootstraptema.ru/snippets/form/2016/form-card/card.png"
