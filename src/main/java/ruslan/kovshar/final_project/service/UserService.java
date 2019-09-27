@@ -43,7 +43,6 @@ public class UserService implements UserDetailsService {
     }
 
     public boolean saveNewUser(User user) {
-
         try {
             userRepository.save(user);
             return true;
@@ -51,6 +50,10 @@ public class UserService implements UserDetailsService {
             log.error(e);
         }
         return false;
+    }
+
+    public void updateUser(User user) {
+        userRepository.save(user);
     }
 
     @Override

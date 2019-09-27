@@ -16,16 +16,14 @@ import ruslan.kovshar.final_project.entity.ProductInCheck;
 import ruslan.kovshar.final_project.entity.User;
 import ruslan.kovshar.final_project.exceptions.ResourseNotFoundException;
 import ruslan.kovshar.final_project.exceptions.TransactionException;
-import ruslan.kovshar.final_project.service.CheckService;
-import ruslan.kovshar.final_project.service.PaymentService;
-import ruslan.kovshar.final_project.service.ReportService;
-import ruslan.kovshar.final_project.service.StockService;
+import ruslan.kovshar.final_project.service.*;
 import ruslan.kovshar.final_project.view.ExceptionsMessages;
 import ruslan.kovshar.final_project.view.Pages;
 import ruslan.kovshar.final_project.view.Params;
 import ruslan.kovshar.final_project.view.URIs;
 
 import javax.servlet.http.HttpSession;
+import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.Optional;
 import java.util.Set;
@@ -43,12 +41,14 @@ public class SeniorCashierController {
     private final StockService stockService;
     private final PaymentService paymentService;
     private final ReportService reportService;
+    private final UserService userService;
 
-    public SeniorCashierController(CheckService checkService, StockService stockService, PaymentService paymentService, ReportService reportService) {
+    public SeniorCashierController(CheckService checkService, StockService stockService, PaymentService paymentService, ReportService reportService, UserService userService) {
         this.checkService = checkService;
         this.stockService = stockService;
         this.paymentService = paymentService;
         this.reportService = reportService;
+        this.userService = userService;
     }
 
     /**
@@ -83,6 +83,8 @@ public class SeniorCashierController {
         reportService.writeZReport(user, countOfAllChecks, totalMoney);
         user.setChecks(Collections.emptySet());
         checkService.clearChecks(checks);
+        user.setCash(user.getCash().subtract(BigDecimal.valueOf(totalMoney)));
+        userService.updateUser(user);
         return Pages.Z_REPORT_PAGE;
     }
 

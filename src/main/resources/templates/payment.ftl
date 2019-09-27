@@ -66,7 +66,7 @@
                                 <div class="col-md-12 pad-adjust">
                                     <input type="text"
                                            class="form-control"
-                                           value="${value}"
+                                           value="${value?long?c}"
                                            readonly
                                            name="value">
                                     <input type="submit" class="btn btn-warning btn-block mt-3" value="PAY NOW"/>
