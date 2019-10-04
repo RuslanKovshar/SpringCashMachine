@@ -15,6 +15,7 @@ import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 import ruslan.kovshar.final_project.enums.Roles;
 import ruslan.kovshar.final_project.service.UserService;
+import ruslan.kovshar.final_project.textcontants.Pages;
 import ruslan.kovshar.final_project.textcontants.TextConstants;
 import ruslan.kovshar.final_project.textcontants.URIs;
 
@@ -48,6 +49,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements W
         http
                 .authorizeRequests()
                 .antMatchers(URIs.MERCHANDISER).hasAuthority(Roles.MERCHANDISER.name())
+                .antMatchers(URIs.SENIOR_CASHIER + URIs.X_REPORT,
+                        URIs.SENIOR_CASHIER + URIs.Z_REPORT,
+                        URIs.SENIOR_CASHIER + URIs.CHECKS).hasAuthority(Roles.SENIOR_CASHIER.name())
                 .antMatchers(URIs.LOGIN).permitAll()
                 .antMatchers(URIs.REGISTRATION).permitAll()
                 .anyRequest().authenticated()
@@ -55,10 +59,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements W
                 .rememberMe()
                 .tokenValiditySeconds(86400)
                 .and()
-                .formLogin().defaultSuccessUrl(URIs.HOME,true).loginPage(URIs.LOGIN).permitAll()
+                .formLogin().defaultSuccessUrl(URIs.HOME, true).loginPage(URIs.LOGIN).permitAll()
                 .and()
                 .logout().permitAll()
-                .and();
+                .and()
+                .exceptionHandling().accessDeniedPage("/forbidden");
     }
 
     @Bean

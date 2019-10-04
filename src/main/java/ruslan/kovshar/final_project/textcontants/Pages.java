@@ -11,4 +11,6 @@ public interface Pages {
     String Z_REPORT_PAGE = "z_report";
     String CHECKS_PAGE = "checks";
     String PAYMENT_PAGE = "payment";
+    String FORBIDDEN = "forbidden";
+    String NOT_FOUND = "404";
 }
