@@ -55,7 +55,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements W
                 .rememberMe()
                 .tokenValiditySeconds(86400)
                 .and()
-                .formLogin().loginPage(URIs.LOGIN).permitAll()
+                .formLogin().defaultSuccessUrl(URIs.HOME,true).loginPage(URIs.LOGIN).permitAll()
                 .and()
                 .logout().permitAll()
                 .and();
