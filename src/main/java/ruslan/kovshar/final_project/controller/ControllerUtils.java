@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
-import static ruslan.kovshar.final_project.view.TextConstants.ERROR_PARAM;
+import static ruslan.kovshar.final_project.textcontants.TextConstants.ERROR_PARAM;
 
 /**
  * helps work with binding result

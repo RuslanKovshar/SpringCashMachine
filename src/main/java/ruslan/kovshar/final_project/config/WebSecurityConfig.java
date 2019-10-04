@@ -15,8 +15,8 @@ import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 import ruslan.kovshar.final_project.enums.Roles;
 import ruslan.kovshar.final_project.service.UserService;
-import ruslan.kovshar.final_project.view.TextConstants;
-import ruslan.kovshar.final_project.view.URIs;
+import ruslan.kovshar.final_project.textcontants.TextConstants;
+import ruslan.kovshar.final_project.textcontants.URIs;
 
 import java.util.Locale;
 

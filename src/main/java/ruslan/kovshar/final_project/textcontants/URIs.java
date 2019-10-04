@@ -1,4 +1,4 @@
-package ruslan.kovshar.final_project.view;
+package ruslan.kovshar.final_project.textcontants;
 
 public interface URIs {
     String HOME = "/";

@@ -7,7 +7,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 
-import static ruslan.kovshar.final_project.view.TablesConstants.*;
+import static ruslan.kovshar.final_project.textcontants.TablesConstants.*;
 
 @Entity
 @Setter

@@ -8,9 +8,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 import ruslan.kovshar.final_project.dto.GetUserDTO;
 import ruslan.kovshar.final_project.entity.User;
-import ruslan.kovshar.final_project.view.Pages;
-import ruslan.kovshar.final_project.view.TextConstants;
-import ruslan.kovshar.final_project.view.URIs;
+import ruslan.kovshar.final_project.textcontants.Pages;
+import ruslan.kovshar.final_project.textcontants.TextConstants;
+import ruslan.kovshar.final_project.textcontants.URIs;
 
 import javax.servlet.http.HttpServletRequest;
 

@@ -18,15 +18,15 @@ import ruslan.kovshar.final_project.exceptions.ResourseNotFoundException;
 import ruslan.kovshar.final_project.exceptions.TransactionException;
 import ruslan.kovshar.final_project.service.ProductService;
 import ruslan.kovshar.final_project.service.StockService;
-import ruslan.kovshar.final_project.view.Pages;
-import ruslan.kovshar.final_project.view.Params;
-import ruslan.kovshar.final_project.view.TextConstants;
-import ruslan.kovshar.final_project.view.URIs;
+import ruslan.kovshar.final_project.textcontants.Pages;
+import ruslan.kovshar.final_project.textcontants.Params;
+import ruslan.kovshar.final_project.textcontants.TextConstants;
+import ruslan.kovshar.final_project.textcontants.URIs;
 
 import javax.validation.Valid;
 import java.util.Map;
 
-import static ruslan.kovshar.final_project.view.ExceptionsMessages.TRANSACTION_ERROR;
+import static ruslan.kovshar.final_project.textcontants.ExceptionsMessages.TRANSACTION_ERROR;
 
 /**
  * controls all merchandiser functions

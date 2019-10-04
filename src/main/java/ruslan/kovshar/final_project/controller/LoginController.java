@@ -6,11 +6,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import ruslan.kovshar.final_project.view.Pages;
-import ruslan.kovshar.final_project.view.Params;
-import ruslan.kovshar.final_project.view.URIs;
+import ruslan.kovshar.final_project.textcontants.Pages;
+import ruslan.kovshar.final_project.textcontants.Params;
+import ruslan.kovshar.final_project.textcontants.URIs;
 
-import static ruslan.kovshar.final_project.view.ExceptionsMessages.BAG_CREDENTIALS;
+import static ruslan.kovshar.final_project.textcontants.ExceptionsMessages.BAG_CREDENTIALS;
 
 
 /**

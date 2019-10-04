@@ -7,7 +7,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 
-import static ruslan.kovshar.final_project.view.TablesConstants.BUYER_INFO;
+import static ruslan.kovshar.final_project.textcontants.TablesConstants.BUYER_INFO;
 
 @Getter
 @Setter

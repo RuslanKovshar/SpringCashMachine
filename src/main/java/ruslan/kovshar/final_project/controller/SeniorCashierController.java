@@ -17,10 +17,10 @@ import ruslan.kovshar.final_project.entity.User;
 import ruslan.kovshar.final_project.exceptions.ResourseNotFoundException;
 import ruslan.kovshar.final_project.exceptions.TransactionException;
 import ruslan.kovshar.final_project.service.*;
-import ruslan.kovshar.final_project.view.ExceptionsMessages;
-import ruslan.kovshar.final_project.view.Pages;
-import ruslan.kovshar.final_project.view.Params;
-import ruslan.kovshar.final_project.view.URIs;
+import ruslan.kovshar.final_project.textcontants.ExceptionsMessages;
+import ruslan.kovshar.final_project.textcontants.Pages;
+import ruslan.kovshar.final_project.textcontants.Params;
+import ruslan.kovshar.final_project.textcontants.URIs;
 
 import javax.servlet.http.HttpSession;
 import java.math.BigDecimal;

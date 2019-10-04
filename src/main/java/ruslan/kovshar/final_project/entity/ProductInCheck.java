@@ -6,7 +6,7 @@ import lombok.*;
 import javax.persistence.*;
 import java.math.BigDecimal;
 
-import static ruslan.kovshar.final_project.view.TablesConstants.CHECK_ID;
+import static ruslan.kovshar.final_project.textcontants.TablesConstants.CHECK_ID;
 
 @Entity
 @AllArgsConstructor

@@ -19,11 +19,10 @@ import ruslan.kovshar.final_project.repository.BuyerRepository;
 import ruslan.kovshar.final_project.repository.CheckRepository;
 import ruslan.kovshar.final_project.repository.ProductRepository;
 import ruslan.kovshar.final_project.repository.UserRepository;
-import ruslan.kovshar.final_project.view.Params;
-import ruslan.kovshar.final_project.view.URIs;
+import ruslan.kovshar.final_project.textcontants.Params;
+import ruslan.kovshar.final_project.textcontants.URIs;
 
 import java.math.BigDecimal;
-import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

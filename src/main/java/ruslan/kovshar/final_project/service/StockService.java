@@ -9,8 +9,8 @@ import ruslan.kovshar.final_project.exceptions.ResourseNotFoundException;
 import ruslan.kovshar.final_project.exceptions.TransactionException;
 import ruslan.kovshar.final_project.repository.StockRepository;
 
-import static ruslan.kovshar.final_project.view.ExceptionsMessages.PRODUCT_NOT_FOUND;
-import static ruslan.kovshar.final_project.view.ExceptionsMessages.TRANSACTION_EXCEPTION;
+import static ruslan.kovshar.final_project.textcontants.ExceptionsMessages.PRODUCT_NOT_FOUND;
+import static ruslan.kovshar.final_project.textcontants.ExceptionsMessages.TRANSACTION_EXCEPTION;
 
 @Service
 public class StockService {

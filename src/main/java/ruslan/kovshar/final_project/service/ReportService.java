@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
-import static ruslan.kovshar.final_project.view.TextConstants.*;
+import static ruslan.kovshar.final_project.textcontants.TextConstants.*;
 
 
 @Service

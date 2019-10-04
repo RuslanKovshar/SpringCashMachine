@@ -2,12 +2,11 @@ package ruslan.kovshar.final_project.service;
 
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
-import ruslan.kovshar.final_project.controller.MerchandiserController;
 import ruslan.kovshar.final_project.entity.Product;
 import ruslan.kovshar.final_project.exceptions.ResourseNotFoundException;
 import ruslan.kovshar.final_project.repository.ProductRepository;
 
-import static ruslan.kovshar.final_project.view.ExceptionsMessages.PRODUCT_NOT_FOUND;
+import static ruslan.kovshar.final_project.textcontants.ExceptionsMessages.PRODUCT_NOT_FOUND;
 
 @Service
 public class ProductService {

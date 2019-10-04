@@ -7,7 +7,7 @@ import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Objects;
 
-import static ruslan.kovshar.final_project.view.TablesConstants.*;
+import static ruslan.kovshar.final_project.textcontants.TablesConstants.*;
 
 @Entity
 @Setter

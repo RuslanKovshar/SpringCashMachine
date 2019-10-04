@@ -11,7 +11,7 @@ import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Set;
 
-import static ruslan.kovshar.final_project.view.TablesConstants.*;
+import static ruslan.kovshar.final_project.textcontants.TablesConstants.*;
 
 @Setter
 @Getter
