@@ -7,6 +7,9 @@ import ruslan.kovshar.final_project.enums.Types;
 
 import java.math.BigDecimal;
 
+/**
+ * DTO for display product
+ */
 @Getter
 @Setter
 public class GetProductDTO {

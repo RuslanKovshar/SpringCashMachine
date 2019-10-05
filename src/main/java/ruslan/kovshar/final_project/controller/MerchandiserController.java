@@ -14,7 +14,7 @@ import ruslan.kovshar.final_project.entity.Product;
 import ruslan.kovshar.final_project.entity.Stock;
 import ruslan.kovshar.final_project.entity.WeightProduct;
 import ruslan.kovshar.final_project.enums.Types;
-import ruslan.kovshar.final_project.exceptions.ResourseNotFoundException;
+import ruslan.kovshar.final_project.exceptions.ResourceNotFoundException;
 import ruslan.kovshar.final_project.exceptions.TransactionException;
 import ruslan.kovshar.final_project.service.ProductService;
 import ruslan.kovshar.final_project.service.StockService;
@@ -122,7 +122,7 @@ public class MerchandiserController {
             Product product = productService.loadByCodeOrName(code, name);
             stockService.update(product, countOfProduct);
             return URIs.REDIRECT + URIs.MERCHANDISER;
-        } catch (ResourseNotFoundException e) {
+        } catch (ResourceNotFoundException e) {
             log.error(e.getMessage());
             return URIs.REDIRECT + URIs.MERCHANDISER + Params.PARAM + Params.NOT_FOUND;
         } catch (TransactionException e) {

@@ -9,6 +9,9 @@ import javax.persistence.*;
 
 import static ruslan.kovshar.final_project.textcontants.TablesConstants.BUYER_INFO;
 
+/**
+ * Buyer entity
+ */
 @Getter
 @Setter
 @NoArgsConstructor

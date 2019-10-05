@@ -15,11 +15,12 @@ public interface URIs {
     String ADD = "/add";
     String X_REPORT = "/x-report";
     String Z_REPORT = "/z-report";
-    String API = "/api";
-    String CASHIER = "/cashier";
     String REDIRECT = "redirect:";
     String CHECKS = "/all_checks";
     String CANCEL_CHECK = "/cancel_check";
     String REMOVE_PRODUCT = "/remove_product";
     String PAYMENT = "/payment";
+    String USER = "/user";
+    String USERS = "/users";
+    String ADMIN = "/admin";
 }

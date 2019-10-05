@@ -32,18 +32,21 @@
             <tbody>
             <#list check.products as product>
                 <tr>
-
                     <td>
-                        ${product.product.name}
-                        <#if isSeniorCashier>
-                            <form action="/senior_cashier/check/remove_product" method="post">
-                                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
-                                <input type="hidden" value="${product.product.name}" name="name">
-                                <button type="submit" class="btn btn-small btn-danger">
-                                    Remove
-                                </button>
-                            </form>
-                        </#if>
+                        <div class="row">
+                            <div class="col">${product.product.name}</div>
+                            <div class="col">
+                                <#if isSeniorCashier>
+                                    <form action="/senior_cashier/check/remove_product" method="post">
+                                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
+                                        <input type="hidden" value="${product.product.name}" name="name">
+                                        <button type="submit" class="btn btn-small btn-danger">
+                                            <@spring.message "remove.product.message"/>
+                                        </button>
+                                    </form>
+                                </#if>
+                            </div>
+                        </div>
                     </td>
                     <td>
                         <#if product.product.type == "PIECE_PRODUCT">

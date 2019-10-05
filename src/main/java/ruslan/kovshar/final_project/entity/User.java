@@ -12,6 +12,9 @@ import java.util.Set;
 
 import static ruslan.kovshar.final_project.textcontants.TablesConstants.*;
 
+/**
+ * Stock entity
+ */
 @Entity
 @Getter
 @Setter
@@ -107,5 +110,9 @@ public class User implements UserDetails {
 
     public boolean isSeniorCashier() {
         return authorities.contains(Roles.SENIOR_CASHIER);
+    }
+
+    public boolean isAdmin(){
+        return authorities.contains(Roles.ADMIN);
     }
 }

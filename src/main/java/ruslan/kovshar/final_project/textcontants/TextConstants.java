@@ -19,4 +19,5 @@ public interface TextConstants {
     String REPORT_COUNT_OF_CHECKS = "Count of checks: ";
     String REPORT_TOTAL_MONEY = "Total money: ";
     String ENDL = System.lineSeparator();
+    String USERS = "users";
 }

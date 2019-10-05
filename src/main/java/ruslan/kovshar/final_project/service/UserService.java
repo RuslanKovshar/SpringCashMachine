@@ -12,6 +12,7 @@ import ruslan.kovshar.final_project.exceptions.UserNotFoundException;
 import ruslan.kovshar.final_project.repository.UserRepository;
 
 import java.util.Collections;
+import java.util.List;
 
 @Service
 public class UserService implements UserDetailsService {
@@ -50,6 +51,10 @@ public class UserService implements UserDetailsService {
             log.error(e);
         }
         return false;
+    }
+
+    public List<User> getAllUsers() {
+        return userRepository.findAll();
     }
 
     public void updateUser(User user) {

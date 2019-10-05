@@ -9,5 +9,6 @@ authenticated = Session.SPRING_SECURITY_CONTEXT??
     isCashier = user.isCashier()
     isMerchandiser = user.isMerchandiser()
     isSeniorCashier = user.isSeniorCashier()
+    isAdmin = user.isAdmin()
     >
 </#if>

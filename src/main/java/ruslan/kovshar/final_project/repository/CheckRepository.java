@@ -15,5 +15,4 @@ public interface CheckRepository extends JpaRepository<Check, Long> {
 
     Page<Check> findAllByUser(User user, Pageable pageable);
 
-    List<Check> findAllByUser(User user);
 }

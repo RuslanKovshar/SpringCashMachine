@@ -7,6 +7,9 @@ import lombok.ToString;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 
+/**
+ * DTO for creation user
+ */
 @ToString
 @Getter
 @Setter

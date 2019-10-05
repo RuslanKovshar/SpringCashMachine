@@ -13,6 +13,9 @@ import java.util.Set;
 
 import static ruslan.kovshar.final_project.textcontants.TablesConstants.*;
 
+/**
+ * Check entity
+ */
 @Setter
 @Getter
 @NoArgsConstructor

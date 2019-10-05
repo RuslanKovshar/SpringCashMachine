@@ -9,6 +9,9 @@ import java.util.Objects;
 
 import static ruslan.kovshar.final_project.textcontants.TablesConstants.*;
 
+/**
+ * Product entity
+ */
 @Entity
 @Setter
 @Getter

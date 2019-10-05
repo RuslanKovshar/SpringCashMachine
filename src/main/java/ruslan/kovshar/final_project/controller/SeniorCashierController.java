@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import ruslan.kovshar.final_project.entity.Check;
 import ruslan.kovshar.final_project.entity.ProductInCheck;
 import ruslan.kovshar.final_project.entity.User;
-import ruslan.kovshar.final_project.exceptions.ResourseNotFoundException;
+import ruslan.kovshar.final_project.exceptions.ResourceNotFoundException;
 import ruslan.kovshar.final_project.exceptions.TransactionException;
 import ruslan.kovshar.final_project.service.*;
 import ruslan.kovshar.final_project.textcontants.ExceptionsMessages;
@@ -121,8 +121,8 @@ public class SeniorCashierController {
                     .stream()
                     .filter(tempCheck -> tempCheck.getId().equals(id))
                     .findAny()
-                    .orElseThrow(() -> new ResourseNotFoundException(ExceptionsMessages.CHECK_NOT_FOUND));
-        } catch (ResourseNotFoundException e) {
+                    .orElseThrow(() -> new ResourceNotFoundException(ExceptionsMessages.CHECK_NOT_FOUND));
+        } catch (ResourceNotFoundException e) {
             log.error(ExceptionsMessages.CHECK_NOT_FOUND);
             return URIs.REDIRECT + URIs.CHECKS + Params.PARAM + Params.ERROR;
         }

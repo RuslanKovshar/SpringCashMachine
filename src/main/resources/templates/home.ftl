@@ -55,4 +55,12 @@
             </button>
         </form>
     </#if>
+
+    <#if isAdmin>
+        <form action="/admin/users">
+            <button type="submit" class="btn btn-success btn-lg btn-block mt-2">
+                <@spring.message "users.message"/>
+            </button>
+        </form>
+    </#if>
 </@c.common>

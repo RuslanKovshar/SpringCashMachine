@@ -5,7 +5,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import ruslan.kovshar.final_project.entity.Product;
 import ruslan.kovshar.final_project.entity.Stock;
-import ruslan.kovshar.final_project.exceptions.ResourseNotFoundException;
+import ruslan.kovshar.final_project.exceptions.ResourceNotFoundException;
 import ruslan.kovshar.final_project.exceptions.TransactionException;
 import ruslan.kovshar.final_project.repository.StockRepository;
 
@@ -28,7 +28,7 @@ public class StockService {
     @Transactional(propagation = Propagation.REQUIRES_NEW, rollbackFor = TransactionException.class)
     public void update(Product product, Integer newCount) throws TransactionException {
         Stock stock = stockRepository.findByProduct(product)
-                .orElseThrow(() -> new ResourseNotFoundException(PRODUCT_NOT_FOUND));
+                .orElseThrow(() -> new ResourceNotFoundException(PRODUCT_NOT_FOUND));
 
         if (stock.getCountOfProduct() + newCount < 0) {
             throw new TransactionException(TRANSACTION_EXCEPTION);

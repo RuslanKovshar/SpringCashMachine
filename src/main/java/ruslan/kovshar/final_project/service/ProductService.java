@@ -3,7 +3,7 @@ package ruslan.kovshar.final_project.service;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 import ruslan.kovshar.final_project.entity.Product;
-import ruslan.kovshar.final_project.exceptions.ResourseNotFoundException;
+import ruslan.kovshar.final_project.exceptions.ResourceNotFoundException;
 import ruslan.kovshar.final_project.repository.ProductRepository;
 
 import static ruslan.kovshar.final_project.textcontants.ExceptionsMessages.PRODUCT_NOT_FOUND;
@@ -31,6 +31,6 @@ public class ProductService {
 
     public Product loadByCodeOrName(Integer code, String name) {
         return productRepository.findByCodeOrName(code, name)
-                .orElseThrow(() -> new ResourseNotFoundException(PRODUCT_NOT_FOUND));
+                .orElseThrow(() -> new ResourceNotFoundException(PRODUCT_NOT_FOUND));
     }
 }

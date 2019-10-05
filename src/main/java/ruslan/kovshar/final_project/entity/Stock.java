@@ -9,6 +9,9 @@ import javax.persistence.*;
 
 import static ruslan.kovshar.final_project.textcontants.TablesConstants.*;
 
+/**
+ * Stock entity
+ */
 @Entity
 @Setter
 @Getter

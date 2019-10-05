@@ -8,6 +8,9 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 
+/**
+ * DTO for creation of product
+ */
 @Setter
 @Getter
 public class CreateProductDTO {

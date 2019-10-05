@@ -13,4 +13,6 @@ public interface Pages {
     String PAYMENT_PAGE = "payment";
     String FORBIDDEN = "forbidden";
     String NOT_FOUND = "404";
+    String USERS = "users";
+    String EDIT_USER = "edit_user";
 }

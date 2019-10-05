@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import ruslan.kovshar.final_project.dto.GetProductDTO;
 import ruslan.kovshar.final_project.entity.*;
-import ruslan.kovshar.final_project.exceptions.ResourseNotFoundException;
+import ruslan.kovshar.final_project.exceptions.ResourceNotFoundException;
 import ruslan.kovshar.final_project.exceptions.TransactionException;
 import ruslan.kovshar.final_project.service.CheckService;
 import ruslan.kovshar.final_project.service.PaymentService;
@@ -103,7 +103,7 @@ public class ProductsController {
             Product product = productService.loadByCodeOrName(code, name);
             session.setAttribute(Params.PRODUCT, product);
             return URIs.REDIRECT + URIs.CHECK + URIs.PRODUCT;
-        } catch (ResourseNotFoundException e) {
+        } catch (ResourceNotFoundException e) {
             log.error(e.getMessage());
             return URIs.REDIRECT + URIs.CHECK + Params.PARAM + Params.NOT_FOUND;
         }
