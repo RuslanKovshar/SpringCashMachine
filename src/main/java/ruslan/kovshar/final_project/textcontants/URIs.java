@@ -23,4 +23,6 @@ public interface URIs {
     String USER = "/user";
     String USERS = "/users";
     String ADMIN = "/admin";
+    String FORBIDDEN = "/forbidden";
+    String ERROR = "/error";
 }

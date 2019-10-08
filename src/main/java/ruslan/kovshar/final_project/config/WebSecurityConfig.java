@@ -52,6 +52,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements W
                 .antMatchers(URIs.SENIOR_CASHIER + URIs.X_REPORT,
                         URIs.SENIOR_CASHIER + URIs.Z_REPORT,
                         URIs.SENIOR_CASHIER + URIs.CHECKS).hasAuthority(Roles.SENIOR_CASHIER.name())
+                .antMatchers(URIs.ADMIN + URIs.USERS,
+                        URIs.ADMIN + URIs.USER).hasAuthority(Roles.ADMIN.name())
                 .antMatchers(URIs.LOGIN).permitAll()
                 .antMatchers(URIs.REGISTRATION).permitAll()
                 .anyRequest().authenticated()
@@ -63,7 +65,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements W
                 .and()
                 .logout().permitAll()
                 .and()
-                .exceptionHandling().accessDeniedPage("/forbidden");
+                .exceptionHandling().accessDeniedPage(URIs.FORBIDDEN);
     }
 
     @Bean
