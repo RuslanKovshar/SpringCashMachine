@@ -13,6 +13,9 @@ public class WeightProduct extends Product {
         return price.divide(new BigDecimal(1000 / value.doubleValue()), 2, RoundingMode.HALF_UP);
     }
 
+    public WeightProduct() {
+    }
+
     public WeightProduct(Integer code, String name, BigDecimal price, Types type) {
         super(code, name, price, type);
     }

@@ -11,6 +11,7 @@ import ruslan.kovshar.final_project.enums.Roles;
 import ruslan.kovshar.final_project.exceptions.UserNotFoundException;
 import ruslan.kovshar.final_project.repository.UserRepository;
 
+import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.List;
 
@@ -40,6 +41,7 @@ public class UserService implements UserDetailsService {
                 .isAccountNonLocked(true)
                 .isCredentialsNonExpired(true)
                 .isEnabled(true)
+                .cash(BigDecimal.ZERO)
                 .build();
     }
 
