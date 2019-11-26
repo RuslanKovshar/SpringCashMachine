@@ -47,10 +47,10 @@ public class User implements UserDetails {
     @Column(name = SECOND_NAME_EN, nullable = false)
     private String secondNameEN;
 
-    @ElementCollection(targetClass = Roles.class, fetch = FetchType.EAGER)
-    @CollectionTable(name = USER_ROLES, joinColumns = @JoinColumn(name = CHECK_USER_ID))
-    @Enumerated(EnumType.STRING)
-    private Set<Roles> authorities;
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
+    private Set<UserRole> authorities;
 
     @Column(name = CASH)
     private BigDecimal cash;
@@ -112,7 +112,7 @@ public class User implements UserDetails {
         return authorities.contains(Roles.SENIOR_CASHIER);
     }
 
-    public boolean isAdmin(){
+    public boolean isAdmin() {
         return authorities.contains(Roles.ADMIN);
     }
 }

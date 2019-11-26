@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 import ruslan.kovshar.final_project.dto.GetUserDTO;
 import ruslan.kovshar.final_project.entity.User;
+import ruslan.kovshar.final_project.entity.UserRole;
 import ruslan.kovshar.final_project.enums.Roles;
 import ruslan.kovshar.final_project.service.UserService;
 import ruslan.kovshar.final_project.textcontants.Pages;
@@ -81,7 +82,8 @@ public class AdminController {
      */
     @PostMapping(URIs.USER + "/{id}")
     public String editUser(@PathVariable(name = Params.ID_PARAM) User user, String[] roles) {
-        Set<Roles> newRoles = Arrays.stream(roles).map(Roles::valueOf).collect(Collectors.toSet());
+        Set<UserRole> newRoles = Arrays.stream(roles).map(Roles::valueOf).map(UserRole::new).collect(Collectors.toSet());
+
         user.setAuthorities(newRoles);
         userService.updateUser(user);
         return URIs.REDIRECT + URIs.ADMIN + URIs.USERS;

@@ -7,6 +7,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import ruslan.kovshar.final_project.dto.CreateUserDTO;
 import ruslan.kovshar.final_project.entity.User;
+import ruslan.kovshar.final_project.entity.UserRole;
 import ruslan.kovshar.final_project.enums.Roles;
 import ruslan.kovshar.final_project.exceptions.UserNotFoundException;
 import ruslan.kovshar.final_project.repository.UserRepository;
@@ -36,7 +37,7 @@ public class UserService implements UserDetailsService {
                 .secondNameUA(createUserDTO.getSecondNameUA())
                 .firstNameEN(createUserDTO.getFirstNameEN())
                 .secondNameEN(createUserDTO.getSecondNameEN())
-                .authorities(Collections.singleton(Roles.CASHIER))
+                .authorities(Collections.singleton(new UserRole(Roles.CASHIER)))
                 .isAccountNonExpired(true)
                 .isAccountNonLocked(true)
                 .isCredentialsNonExpired(true)
