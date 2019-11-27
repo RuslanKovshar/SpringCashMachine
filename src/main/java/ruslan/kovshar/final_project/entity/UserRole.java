@@ -1,6 +1,5 @@
 package ruslan.kovshar.final_project.entity;
 
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -15,7 +14,6 @@ import java.util.Set;
 @Getter
 @Setter
 @NoArgsConstructor
-@Builder
 @Table(name = "user_role")
 public class UserRole implements GrantedAuthority {
 

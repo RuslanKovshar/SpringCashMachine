@@ -5,6 +5,7 @@ import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 import ruslan.kovshar.final_project.entity.User;
+import ruslan.kovshar.final_project.entity.UserRole;
 import ruslan.kovshar.final_project.enums.Roles;
 
 import javax.servlet.http.HttpServletRequest;
@@ -40,18 +41,18 @@ public class GetUserDTO {
     }
 
     public boolean isCashier() {
-        return authorities.contains(Roles.CASHIER);
+        return authorities.contains(new UserRole(Roles.CASHIER));
     }
 
     public boolean isMerchandiser() {
-        return authorities.contains(Roles.MERCHANDISER);
+        return authorities.contains(new UserRole(Roles.MERCHANDISER));
     }
 
     public boolean isSeniorCashier() {
-        return authorities.contains(Roles.SENIOR_CASHIER);
+        return authorities.contains(new UserRole(Roles.SENIOR_CASHIER));
     }
 
     public boolean isAdmin(){
-        return authorities.contains(Roles.ADMIN);
+        return authorities.contains(new UserRole(Roles.ADMIN));
     }
 }

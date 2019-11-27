@@ -102,18 +102,18 @@ public class User implements UserDetails {
     }
 
     public boolean isCashier() {
-        return authorities.contains(UserRole.builder().role(Roles.CASHIER).build());
+        return authorities.contains(new UserRole(Roles.CASHIER));
     }
 
     public boolean isMerchandiser() {
-        return authorities.contains(UserRole.builder().role(Roles.MERCHANDISER).build());
+        return authorities.contains(new UserRole(Roles.MERCHANDISER));
     }
 
     public boolean isSeniorCashier() {
-        return authorities.contains(UserRole.builder().role(Roles.SENIOR_CASHIER).build());
+        return authorities.contains(new UserRole(Roles.SENIOR_CASHIER));
     }
 
     public boolean isAdmin() {
-        return authorities.contains(UserRole.builder().role(Roles.ADMIN).build());
+        return authorities.contains(new UserRole(Roles.ADMIN));
     }
 }
