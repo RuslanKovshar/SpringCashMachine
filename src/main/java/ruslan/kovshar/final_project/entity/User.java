@@ -1,6 +1,7 @@
 package ruslan.kovshar.final_project.entity;
 
 import lombok.*;
+import org.hibernate.annotations.Fetch;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import ruslan.kovshar.final_project.enums.Roles;
@@ -47,7 +48,7 @@ public class User implements UserDetails {
     @Column(name = SECOND_NAME_EN, nullable = false)
     private String secondNameEN;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
     private Set<UserRole> authorities;
@@ -101,18 +102,18 @@ public class User implements UserDetails {
     }
 
     public boolean isCashier() {
-        return authorities.contains(Roles.CASHIER);
+        return authorities.contains(UserRole.builder().role(Roles.CASHIER).build());
     }
 
     public boolean isMerchandiser() {
-        return authorities.contains(Roles.MERCHANDISER);
+        return authorities.contains(UserRole.builder().role(Roles.MERCHANDISER).build());
     }
 
     public boolean isSeniorCashier() {
-        return authorities.contains(Roles.SENIOR_CASHIER);
+        return authorities.contains(UserRole.builder().role(Roles.SENIOR_CASHIER).build());
     }
 
     public boolean isAdmin() {
-        return authorities.contains(Roles.ADMIN);
+        return authorities.contains(UserRole.builder().role(Roles.ADMIN).build());
     }
 }
