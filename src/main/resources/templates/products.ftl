@@ -6,9 +6,9 @@
         <thead>
         <tr>
             <th scope="col">ID</th>
-            <th scope="col">Name</th>
-            <th scope="col">Code</th>
-            <th scope="col">Price</th>
+            <th scope="col"><@spring.message "product.name.message"/></th>
+            <th scope="col"><@spring.message "product.code.message"/></th>
+            <th scope="col"><@spring.message "product.price.message"/></th>
         </tr>
         </thead>
         <tbody>
