@@ -24,6 +24,7 @@ import ruslan.kovshar.final_project.textcontants.TextConstants;
 import ruslan.kovshar.final_project.textcontants.URIs;
 
 import javax.validation.Valid;
+import java.util.List;
 import java.util.Map;
 
 import static ruslan.kovshar.final_project.textcontants.ExceptionsMessages.TRANSACTION_ERROR;
@@ -92,7 +93,7 @@ public class MerchandiserController {
 
         if (!productService.create(product)) {
             model.addAttribute(TextConstants.CREATE_PRODUCT_DTO, createProductDTO);
-            model.addAttribute(Params.ERROR,true);
+            model.addAttribute(Params.ERROR, true);
             return Pages.MERCHANDISER_PAGE;
         }
 
@@ -130,4 +131,12 @@ public class MerchandiserController {
             return URIs.REDIRECT + URIs.MERCHANDISER;
         }
     }
+
+    @GetMapping("/products")
+    public String productsPage(Model model) {
+        List<Product> allProducts = productService.getAllProducts();
+        model.addAttribute("products", allProducts);
+        return "products";
+    }
+
 }

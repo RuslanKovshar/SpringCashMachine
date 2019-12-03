@@ -51,7 +51,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements W
                 .antMatchers("/js/**").permitAll()
                 .antMatchers("/css/**").permitAll()
                 .antMatchers("/jquery/**").permitAll()
-                .antMatchers(URIs.MERCHANDISER).hasAuthority(Roles.MERCHANDISER.name())
+                .antMatchers(URIs.MERCHANDISER + "/**").hasAuthority(Roles.MERCHANDISER.name())
                 .antMatchers(URIs.SENIOR_CASHIER + URIs.X_REPORT,
                         URIs.SENIOR_CASHIER + URIs.Z_REPORT,
                         URIs.SENIOR_CASHIER + URIs.CHECKS).hasAuthority(Roles.SENIOR_CASHIER.name())

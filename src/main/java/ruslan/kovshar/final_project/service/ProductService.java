@@ -6,6 +6,8 @@ import ruslan.kovshar.final_project.entity.Product;
 import ruslan.kovshar.final_project.exceptions.ResourceNotFoundException;
 import ruslan.kovshar.final_project.repository.ProductRepository;
 
+import java.util.List;
+
 import static ruslan.kovshar.final_project.textcontants.ExceptionsMessages.PRODUCT_NOT_FOUND;
 
 @Service
@@ -32,5 +34,9 @@ public class ProductService {
     public Product loadByCodeOrName(Integer code, String name) {
         return productRepository.findByCodeOrName(code, name)
                 .orElseThrow(() -> new ResourceNotFoundException(PRODUCT_NOT_FOUND));
+    }
+
+    public List<Product> getAllProducts() {
+        return productRepository.findAll();
     }
 }

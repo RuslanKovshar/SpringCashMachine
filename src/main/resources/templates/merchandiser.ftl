@@ -86,4 +86,9 @@
                     class="btn btn-lg btn-danger btn-block mt-2"><@spring.message "create.btn.message"/></button>
         </form>
     </div>
+
+    <br>
+    <form action="/merchandiser/products" method="get">
+        <button class="btn btn-primary btn-block" type="submit">Show all products</button>
+    </form>
 </@c.common>
