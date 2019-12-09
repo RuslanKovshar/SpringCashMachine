@@ -57,7 +57,15 @@ public class MerchandiserController {
     public String merchandiserPage(@RequestParam(name = Params.NOT_FOUND, required = false) String notFound,
                                    Model model) {
         model.addAttribute(Params.NOT_FOUND, notFound != null);
+        List<Stock> allProducts = stockService.getAllProductsFromStock();
+        model.addAttribute("products", allProducts);
         return Pages.MERCHANDISER_PAGE;
+    }
+
+    @PostMapping("/write_products")
+    public String writeProduct() {
+        stockService.printProductsToFile();
+        return URIs.REDIRECT + URIs.MERCHANDISER;
     }
 
 
@@ -131,12 +139,4 @@ public class MerchandiserController {
             return URIs.REDIRECT + URIs.MERCHANDISER;
         }
     }
-
-    @GetMapping("/products")
-    public String productsPage(Model model) {
-        List<Product> allProducts = productService.getAllProducts();
-        model.addAttribute("products", allProducts);
-        return "products";
-    }
-
 }

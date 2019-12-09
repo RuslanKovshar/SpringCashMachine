@@ -88,7 +88,41 @@
     </div>
 
     <br>
-    <form action="/merchandiser/products" method="get">
-        <button class="btn btn-primary btn-block" type="submit"><@spring.message "show.all.products.message"/></button>
+    <button class="btn btn-primary btn-block" type="button"
+            data-toggle="collapse"
+            data-target="#collapseExample2"
+            aria-expanded="false"
+            aria-controls="collapseExample2">
+        <@spring.message "show.all.products.message"/>
+    </button>
+
+    <div class="collapse" id="collapseExample2">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th scope="col"><@spring.message "product.name.message"/></th>
+                <th scope="col"><@spring.message "product.code.message"/></th>
+                <th scope="col"><@spring.message "product.price.message"/></th>
+                <th scope="col"><@spring.message "product.count.message"/></th>
+            </tr>
+            </thead>
+            <tbody>
+            <#list products as product>
+                <tr>
+                    <td>${product.product.name}</td>
+                    <td>${product.product.code}</td>
+                    <td>${product.product.price}</td>
+                    <td>${product.countOfProduct}</td>
+                </tr>
+            </#list>
+            </tbody>
+        </table>
+    </div>
+
+    <br>
+    <form action="/merchandiser/write_products" method="post">
+        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
+        <button type="submit" class="btn btn-primary btn-block">Write products</button>
     </form>
+
 </@c.common>
