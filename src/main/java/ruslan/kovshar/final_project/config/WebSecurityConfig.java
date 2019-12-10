@@ -45,6 +45,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements W
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        //@formatter:off
         http
                 .authorizeRequests()
                     .antMatchers("/js/**").permitAll()
@@ -67,9 +68,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements W
                     .defaultSuccessUrl(URIs.HOME, true)
                     .loginPage(URIs.LOGIN).permitAll()
                 .and()
-                    .logout().permitAll()
+                    .logout()
+                    .invalidateHttpSession(false)
+                    .permitAll()
                 .and()
-                    .exceptionHandling().accessDeniedPage(URIs.FORBIDDEN);
+                    .exceptionHandling()
+                    .accessDeniedPage(URIs.FORBIDDEN);
+        //@formatter:on
     }
 
     @Bean

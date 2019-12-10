@@ -75,7 +75,7 @@ public class SeniorCashierController {
      * @return page template
      */
     @GetMapping(URIs.Z_REPORT)
-    public String zReportPage(@AuthenticationPrincipal User user, Model model) {
+    public String zReportPage(@AuthenticationPrincipal User user, Model model, HttpSession session) {
         Set<Check> checks = user.getChecks();
         int countOfAllChecks = checks.size();
         double totalMoney = checks.stream().mapToDouble(s -> s.getTotalPrice().doubleValue()).sum();
@@ -85,6 +85,7 @@ public class SeniorCashierController {
         checkService.clearChecks(checks);
         user.setCash(user.getCash().subtract(BigDecimal.valueOf(totalMoney)));
         userService.updateUser(user);
+        session.invalidate();
         return Pages.Z_REPORT_PAGE;
     }
 
