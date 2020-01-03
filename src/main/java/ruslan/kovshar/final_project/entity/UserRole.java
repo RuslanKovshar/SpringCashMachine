@@ -14,7 +14,7 @@ import java.util.Set;
 @Getter
 @Setter
 @NoArgsConstructor
-@Table(name = "user_role")
+@Table(name = "user_role", uniqueConstraints = {@UniqueConstraint(columnNames = {"role"})})
 public class UserRole implements GrantedAuthority {
 
     @Id
