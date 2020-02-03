@@ -17,7 +17,7 @@ import static ruslan.kovshar.final_project.textcontants.TablesConstants.BUYER_IN
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = BUYER_INFO)
+@Table/*(name = BUYER_INFO)*/
 public class Buyer {
 
     @Id
