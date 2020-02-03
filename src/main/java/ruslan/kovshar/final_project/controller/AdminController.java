@@ -1,5 +1,6 @@
 package ruslan.kovshar.final_project.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,6 +12,7 @@ import ruslan.kovshar.final_project.dto.GetUserDTO;
 import ruslan.kovshar.final_project.entity.User;
 import ruslan.kovshar.final_project.entity.UserRole;
 import ruslan.kovshar.final_project.enums.Roles;
+import ruslan.kovshar.final_project.repository.UserRoleRepository;
 import ruslan.kovshar.final_project.service.UserService;
 import ruslan.kovshar.final_project.textcontants.Pages;
 import ruslan.kovshar.final_project.textcontants.TextConstants;
@@ -18,10 +20,7 @@ import ruslan.kovshar.final_project.textcontants.URIs;
 import ruslan.kovshar.final_project.textcontants.Params;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -32,9 +31,12 @@ import java.util.stream.Collectors;
 public class AdminController {
 
     private final UserService userService;
+    private final UserRoleRepository userRoleRepository;
 
-    public AdminController(UserService userService) {
+    @Autowired
+    public AdminController(UserService userService, UserRoleRepository userRoleRepository) {
         this.userService = userService;
+        this.userRoleRepository = userRoleRepository;
     }
 
     /**
@@ -82,9 +84,17 @@ public class AdminController {
      */
     @PostMapping(URIs.USER + "/{id}")
     public String editUser(@PathVariable(name = Params.ID_PARAM) User user, String[] roles) {
-        Set<UserRole> newRoles = Arrays.stream(roles).map(Roles::valueOf).map(UserRole::new).collect(Collectors.toSet());
+        user.getAuthorities().clear();
 
-        user.setAuthorities(newRoles);
+        Set<UserRole> newUserRoles = Arrays.stream(roles).map(Roles::valueOf).map(role -> {
+            Optional<UserRole> userRoleOptional = userRoleRepository.findByRole(role);
+            if (userRoleOptional.isPresent()) {
+                return userRoleOptional.get();
+            }
+            throw new IllegalArgumentException("No such UserRole: " + role);
+        }).collect(Collectors.toSet());
+
+        user.setAuthorities(newUserRoles);
         userService.updateUser(user);
         return URIs.REDIRECT + URIs.ADMIN + URIs.USERS;
     }
