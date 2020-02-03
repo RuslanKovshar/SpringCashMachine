@@ -1,3 +1,7 @@
+SET NAMES 'utf8';
+SET CHARACTER SET 'utf8';
+SET SESSION collation_connection = 'utf8_general_ci';
+
 create table product_in_check
 (
     id               bigint not null auto_increment,
