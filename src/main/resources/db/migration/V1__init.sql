@@ -1,5 +1,3 @@
-use cash_machine;
-
 create table product_in_check
 (
     id               bigint not null auto_increment,
