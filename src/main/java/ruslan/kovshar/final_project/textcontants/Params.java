@@ -9,7 +9,7 @@ public interface Params {
     String ID_PARAM = "id";
     String VALUE = "value";
     String CHECK = "checkParam";
-    String PRODUCT = "product";
+    String PRODUCT = "productParam";
     String CHECKS = "checks";
     String PAGE = "page";
 }
