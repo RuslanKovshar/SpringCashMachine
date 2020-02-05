@@ -8,7 +8,7 @@ public interface Params {
     String SUCCESS = "success";
     String ID_PARAM = "id";
     String VALUE = "value";
-    String CHECK = "check";
+    String CHECK = "checkParam";
     String PRODUCT = "product";
     String CHECKS = "checks";
     String PAGE = "page";
