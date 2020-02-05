@@ -22,7 +22,7 @@
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                 <a id="en" class="dropdown-item" href="?lang=en">ENG</a>
-                <a class="dropdown-item" href="?lang=ua">UA</a>
+                <a class="dropdown-item" href="?lang=UA">UA</a>
             </div>
         </div>
 
